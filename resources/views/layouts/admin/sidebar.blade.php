@@ -23,7 +23,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library catatan ( 'menu-open' ) untuk navbar aktif-->
                 <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
+                    <a href="{{route('dashboard')}}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -42,7 +42,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/mailbox/mailbox.html" class="nav-link">
+                            <a href="{{route('pengaturan.user.index')}}" class="nav-link">
                                 <i class="fa fa-users-cog users nav-icon"></i>
                                 <p>User</p>
                             </a>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Pengatruan\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,11 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('/pengaturan')->group(function () {
+        Route::resource('/user', UserController::class,['as'=>'pengaturan']);
+    });
+
 });
+
+

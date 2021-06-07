@@ -154,9 +154,15 @@
                 <!-- /.row -->
                 </li>
                 <!-- Menu Footer-->
-                <li class="user-footer">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                <li class="user-footer d-flex">
+                    <a href="{{route('profile.show')}}" class="btn btn-default btn-flat">Profile</a>
+                    <form class="ml-auto" method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn btn-default btn-flat">
+                            Sign Out
+                        </button>
+
+                    </form>
                 </li>
             </ul>
         </li>
