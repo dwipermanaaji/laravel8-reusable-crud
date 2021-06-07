@@ -280,7 +280,17 @@
       }
     }
     > .user-body {
-      border-color: $gray-600;
+        padding: 15px;
+        border-bottom: 1px solid #f4f4f4;
+        border-top: 1px solid #dddddd;
+        @include clearfix();
+        a {
+            color: #444 !important;
+            @include media-breakpoint-up(sm) {
+            background: #fff !important;
+            color: #444 !important;
+            }
+        }
     }
     > .user-body a {
       background-color: transparent !important;
@@ -293,3 +303,4 @@
     }
   }
 }
+
