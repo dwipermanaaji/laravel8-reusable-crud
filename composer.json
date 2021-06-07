@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -18,7 +19,8 @@
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.0",
-        "ramsey/uuid": "^4.1"
+        "ramsey/uuid": "^4.1",
+        "spatie/laravel-permission": "^4.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
