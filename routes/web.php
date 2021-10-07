@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Pengatruan\UserController;
+use App\Http\Controllers\Pengaturan\RoleController;
+use App\Http\Controllers\Pengaturan\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::prefix('/pengaturan')->group(function () {
         Route::resource('/user', UserController::class,['as'=>'pengaturan']);
+        Route::resource('/role', RoleController::class,['as'=>'pengaturan']);
+        
     });
 
 });

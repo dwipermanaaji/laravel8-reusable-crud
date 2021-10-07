@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Pengatruan;
+namespace App\Http\Controllers\Pengaturan;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('pengaturan.user.index');
+        $data = User::with('roles')->get();
+        return view('pengaturan.user.index',compact('data'));
     }
 
     public function create()

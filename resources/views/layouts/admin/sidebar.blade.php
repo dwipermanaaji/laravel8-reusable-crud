@@ -47,8 +47,12 @@
                                 <p>User</p>
                             </a>
                         </li>
-
-
+                        <li class="nav-item">
+                            <a href="{{route('pengaturan.role.index')}}" class="nav-link">
+                                <i class="fa fa-users-cog users nav-icon"></i>
+                                <p>Role</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
