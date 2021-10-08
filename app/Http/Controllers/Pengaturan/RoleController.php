@@ -44,7 +44,7 @@ class RoleController extends Controller
         }
         DB::commit();
 
-        // toastr()->success('Tambah Data Berhasil', 'Berhasil!');
+        toastr()->success('Tambah Data Berhasil', 'Berhasil!');
         return redirect(route('pengaturan.role.index'));
     }
 

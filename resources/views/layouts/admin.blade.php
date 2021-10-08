@@ -41,6 +41,7 @@
             }
 
         </style>
+        @toastr_css
         @stack('style')
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
@@ -125,6 +126,8 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{ asset('admin-lte/dist/js/demo.js')}}"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        @toastr_js
+        @toastr_render
         @stack('script')
     </body>
 </html>
