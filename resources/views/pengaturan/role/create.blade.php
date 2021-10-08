@@ -33,27 +33,50 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="quickForm" method="POST" action="12312">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
-                                        <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
+                            <form id="quickForm" method="POST" action="{{route('pengaturan.role.store')}}">
+                              @csrf
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="form-group col-6">
+                                      <label>Role Name<small>*</small></label>
+                                      {!! Form::text('name', null, ['class'=>'form-control '.( $errors->has('name') ? ' is-invalid' : '' ),'placeholder'=>'Enter role name','required']) !!}
+                                      @error('name')
+                                          <span class="error invalid-feedback">
+                                              {{ $message }}
+                                          </span>
+                                      @enderror
+                                  </div>
+                                  <div class="form-group col-6">
+                                      <label>Guard Name<small>*</small></label>
+                                      {!! Form::email('guard_name', 'web', ['class'=>'form-control '.( $errors->has('guard_name') ? ' is-invalid' : '' ),'placeholder'=>'Enter guard name','readonly','required']) !!}
+                                      @error('guard_name')
+                                          <span class="error invalid-feedback">
+                                              {{ $message }}
+                                          </span>
+                                      @enderror
+                                  </div>
+                                  <div class="form-group col-12">
+                                      <label>Premission</label>
+                                      <div class="row ml-2 mr-2 mt-0">
+                                        @foreach ( $permissions as $i => $permission )
+                                        <div class="form-check col-3">
+                                          {!! Form::checkbox( 'permissions[]', 
+                                                            $permission->id,
+                                                            false,
+                                                            ['class' => 'form-check-input', 'id' => 'permission'.$permission->id] 
+                                                            ) !!}
+                                          {!! Form::label('permission'.$permission->id,  $permission->name,['class'=>'form-check-label']) !!}
                                         </div>
-                                    </div>
+                                      @endforeach
+                                      </div>
+
+                                  </div>                                    
                                 </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+                              </div>
+                              <!-- /.card-body -->
+                              <div class="card-footer">
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
                             </form>
                         </div><!-- /.card -->
                     </div><!--/.col (left) -->
@@ -65,51 +88,5 @@
 @endsection
 
 @push('script')
-<script src="{{ asset('admin-lte/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
-<script>
-$(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
-  $('#quickForm').validate({
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      terms: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a vaild email address"
-      },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
-      },
-      terms: "Please accept our terms"
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});    
-</script>
+
 @endpush
