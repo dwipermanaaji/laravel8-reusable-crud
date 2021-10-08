@@ -53,7 +53,18 @@
                                                     @endforeach
                                                 </td>
                                                 <td>{{$item->created_at}}</td>
-                                                <td></td>
+                                                <td class="text-center">
+                                                  <a href="{{ route('pengaturan.user.edit', $item->id) }}" class="btn btn-light-warning btn-sm btn-icon" title="Edit Pengaduan">
+                                                      <i class="fas fa-pencil-alt"></i>
+                                                  </a>
+                                                  <button type="button" onclick="return deletePengaduan('{{$item->id}}')" class="btn btn-light-danger btn-sm btn-icon" title="Hapus Pengaduan">
+                                                      <i class="fas fa-trash-alt"></i>
+                                                  </button>
+                                                  <form id="form-delete-{{$item->id}}" action="{{ route('pengaturan.user.destroy', $item->id) }}" method="POST" style="display: none;">
+                                                      @method('DELETE')
+                                                      @csrf
+                                                  </form>
+                                                </td>                                                    
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -83,7 +94,24 @@
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
-            });
+            });     
         });
     </script>
+    <script text="javascript">
+        function deletePengaduan(token) {
+            Swal.fire({
+                title: "Yakin akan dihapus?",
+                text: "Setelah dihapus data tidak akan tampil di aplikasi.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal"
+            }).then(function(result) {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('form-delete-' + token).submit();
+                }
+            });
+        }
+    </script>    
 @endpush

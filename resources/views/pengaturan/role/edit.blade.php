@@ -13,7 +13,7 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item"><a href="#">Role</a></li>
-                            <li class="breadcrumb-item active">Form Create</li>
+                            <li class="breadcrumb-item active">Form Edit</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -29,16 +29,18 @@
                         <!-- jquery validation -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Form Create</h3>
+                                <h3 class="card-title">Form Edit <small>({{$data->name}})</small></h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="quickForm" method="POST" action="12312">
+                            <form id="quickForm" method="POST" action="{{route('pengaturan.role.update',$data->id)}}">
+                                @csrf
+                                @method('PUT')
                                 <div class="card-body">
                                   <div class="row">
                                     <div class="form-group col-6">
                                         <label>Role Name</label>
-                                        {!! Form::email('name', null, ['class'=>'form-control '.( $errors->has('name') ? ' is-invalid' : '' ),'placeholder'=>'Enter role name']) !!}
+                                        {!! Form::text('name', $data->name, ['class'=>'form-control '.( $errors->has('name') ? ' is-invalid' : '' ),'placeholder'=>'Enter role name']) !!}
                                         @error('name')
                                             <span class="error invalid-feedback">
                                                 {{ $message }}
@@ -47,7 +49,7 @@
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Guard Name</label>
-                                        {!! Form::email('guard_name', 'web', ['class'=>'form-control '.( $errors->has('guard_name') ? ' is-invalid' : '' ),'placeholder'=>'Enter guard name','readonly']) !!}
+                                        {!! Form::email('guard_name', $data->guard_name, ['class'=>'form-control '.( $errors->has('guard_name') ? ' is-invalid' : '' ),'placeholder'=>'Enter guard name','readonly']) !!}
                                         @error('guard_name')
                                             <span class="error invalid-feedback">
                                                 {{ $message }}
@@ -56,27 +58,19 @@
                                     </div>
                                     <div class="form-group col-12">
                                         <label>Premission</label>
-                                        @php
-                                            $working_days = array( 0 => 'Mon', 1 => 'Tue', 2 => 'Wed',3 => 'Thu', 4 => 'Fri', 5 => 'Sat', 6 => 'Sun' );
-                                            $arrayToSearch = array("Mon");
-                                        @endphp
-                                        {{-- {!! Form::email('guard_name', 'web', ['class'=>'form-control '.( $errors->has('guard_name') ? ' is-invalid' : '' ),'placeholder'=>'Enter guard name','readonly']) !!} --}}
-                                        {{-- {!! Form::checkbox('premission[]', 1, ['1'], ['class'=>'form-control']) !!} --}}
-@foreach ( $working_days as $i => $working_day )
-{{dd(!in_array($working_days[$i],$arrayToSearch))}}
-{!! Form::checkbox( 'working_days[]', 
-                  $working_day,
-                  !in_array($working_days[$i],$arrayToSearch),
-                  ['class' => 'md-check', 'id' => $working_day] 
-                  ) !!}
-{!! Form::label($working_day,  $working_day) !!}
-@endforeach
-                                        @error('guard_name')
-                                            <span class="error invalid-feedback">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
-                                    </div>                                    
+                                        <div class="row ml-2 mr-2 mt-0">
+                                          @foreach ( $permissions as $i => $permission )
+                                            <div class="form-check col-3">
+                                                {!! Form::checkbox( 'permissions[]', 
+                                                                    $permission->id,
+                                                                    $data->permissions->count() > 0 ? in_array($permission->id, $data->permissions->pluck('id')->toarray()) : false,
+                                                                    ['class' => 'form-check-input', 'id' => 'permission'.$permission->id] 
+                                                                    ) !!}
+                                                {!! Form::label('permission'.$permission->id,  $permission->name,['class'=>'form-check-label']) !!}
+                                            </div>
+                                          @endforeach
+                                        </div>
+                                    </div>  
                                   </div>
                                 </div>
                                 <!-- /.card-body -->

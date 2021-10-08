@@ -39,7 +39,7 @@
                                             <th>Guard Name</th>
                                             <th>Premissions</th>
                                             <th>Created At</th>
-                                            <th></th>
+                                            <th>Option</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,7 +53,18 @@
                                                     @endforeach
                                                 </td>
                                                 <td>{{$item->created_at}}</td>
-                                                <td></td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('pengaturan.role.edit', $item->id) }}" class="btn btn-light-warning btn-sm btn-icon" title="Edit Pengaduan">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <button type="button" onclick="return deletePengaduan('{{$item->id}}')" class="btn btn-light-danger btn-sm btn-icon" title="Hapus Pengaduan">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                    <form id="form-delete-{{$item->id}}" action="{{ route('pengaturan.role.destroy', $item->id) }}" method="POST" style="display: none;">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                    </form>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -73,17 +84,21 @@
 @endsection
 
 @push('script')
-    <script>
-        $(function () {
-            $('#example1').DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": true,
-                "responsive": true,
+    <script text="javascript">
+        function deletePengaduan(token) {
+            Swal.fire({
+                title: "Yakin akan dihapus?",
+                text: "Setelah dihapus data tidak akan tampil di aplikasi.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal"
+            }).then(function(result) {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('form-delete-' + token).submit();
+                }
             });
-        });
+        }
     </script>
 @endpush

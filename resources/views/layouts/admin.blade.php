@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/daterangepicker/daterangepicker.css')}}">
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/summernote/summernote-bs4.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css')}}">
         <style>
             .navbar-nav > .user-menu > .dropdown-menu > .user-body {
                 padding: 15px;
@@ -126,6 +127,8 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{ asset('admin-lte/dist/js/demo.js')}}"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
+        <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
         @toastr_js
         @toastr_render
         @stack('script')

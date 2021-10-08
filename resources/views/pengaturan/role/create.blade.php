@@ -59,17 +59,16 @@
                                       <label>Premission</label>
                                       <div class="row ml-2 mr-2 mt-0">
                                         @foreach ( $permissions as $i => $permission )
-                                        <div class="form-check col-3">
-                                          {!! Form::checkbox( 'permissions[]', 
-                                                            $permission->id,
-                                                            false,
-                                                            ['class' => 'form-check-input', 'id' => 'permission'.$permission->id] 
-                                                            ) !!}
-                                          {!! Form::label('permission'.$permission->id,  $permission->name,['class'=>'form-check-label']) !!}
-                                        </div>
-                                      @endforeach
+                                          <div class="form-check col-3">
+                                            {!! Form::checkbox( 'permissions[]', 
+                                                              $permission->id,
+                                                              false,
+                                                              ['class' => 'form-check-input', 'id' => 'permission'.$permission->id] 
+                                                              ) !!}
+                                            {!! Form::label('permission'.$permission->id,  $permission->name,['class'=>'form-check-label']) !!}
+                                          </div>
+                                        @endforeach
                                       </div>
-
                                   </div>                                    
                                 </div>
                               </div>
