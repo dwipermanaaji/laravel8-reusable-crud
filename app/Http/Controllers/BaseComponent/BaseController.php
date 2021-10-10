@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BaseComponent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class BaseController extends Controller {
   use GenerateView, GenerateRoute;
@@ -41,6 +42,17 @@ class BaseController extends Controller {
       $this->_handleDBTransactionError(app_path('Models/'.$this->f_model.'.php Not Found'));
     
     $this->model = app("App\Models\\".$this->f_model);
+  }
+
+  public function dataTable(Request $request)
+  {
+    $primaryKey = $this->model->getKeyName();
+    $model = $this->model;
+    if (method_exists($this, '_dataTableWith')) {
+        $model = $this->_dataTableWith($model);
+    }
+    $model = $model->newQuery();
+    dd($model);
   }
 
   public function index()
