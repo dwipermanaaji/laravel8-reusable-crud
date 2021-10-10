@@ -54,16 +54,18 @@
                                                 </td>
                                                 <td>{{$item->created_at}}</td>
                                                 <td class="text-center">
-                                                  <a href="{{ route('pengaturan.user.edit', $item->id) }}" class="btn btn-light-warning btn-sm btn-icon" title="Edit Pengaduan">
-                                                      <i class="fas fa-pencil-alt"></i>
-                                                  </a>
-                                                  <button type="button" onclick="return deletePengaduan('{{$item->id}}')" class="btn btn-light-danger btn-sm btn-icon" title="Hapus Pengaduan">
-                                                      <i class="fas fa-trash-alt"></i>
-                                                  </button>
-                                                  <form id="form-delete-{{$item->id}}" action="{{ route('pengaturan.user.destroy', $item->id) }}" method="POST" style="display: none;">
-                                                      @method('DELETE')
-                                                      @csrf
-                                                  </form>
+                                                  @if ($item->email != 'admin@admin.com')
+                                                    <a href="{{ route('pengaturan.user.edit', $item->id) }}" class="btn btn-light-warning btn-sm btn-icon" title="Edit Pengaduan">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <button type="button" onclick="return deletePengaduan('{{$item->id}}')" class="btn btn-light-danger btn-sm btn-icon" title="Hapus Pengaduan">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                    <form id="form-delete-{{$item->id}}" action="{{ route('pengaturan.user.destroy', $item->id) }}" method="POST" style="display: none;">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                    </form>
+                                                  @endif
                                                 </td>                                                    
                                             </tr>
                                         @endforeach
