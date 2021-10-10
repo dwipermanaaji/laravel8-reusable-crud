@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DataTables;
+use Illuminate\Support\Facades\Crypt;
 
 class BaseController extends Controller {
   use GenerateView, GenerateRoute;
@@ -25,11 +27,16 @@ class BaseController extends Controller {
   protected $segments = [];
   protected $segment = null;
 
+  private $rawColumns = ['action'];
+
+  public $datatableRows = [];
+  
   public function __construct()
   {
     $this->setModel();
     $this->setView();
     $this->setRoute(); 
+
   }
 
 
@@ -52,12 +59,38 @@ class BaseController extends Controller {
         $model = $this->_dataTableWith($model);
     }
     $model = $model->newQuery();
-    dd($model);
+    $dataTables =  DataTables::eloquent($model);
+    $dataTables->addColumn('action', function ($data) use ($primaryKey, $request) {
+      $btn = "
+        <a href='".route($this->routes['edit'],$data->id)."' class='btn btn-light-warning btn-sm btn-icon' title='Edit $this->title'>
+            <i class='fas fa-pencil-alt'></i>
+        </a>
+        <button type='button' onclick='return deletePengaduan($data->id)' class='btn btn-light-danger btn-sm btn-icon' title='Hapus $this->title'>
+            <i class='fas fa-trash-alt'></i>
+        </button>
+        <form id='form-delete-$data->id' action='".route($this->routes['destroy'],$data->id)."' method='POST' style='display: none;'>
+            ".csrf_field()."
+            ". method_field('DELETE') . "
+        </form> 
+      ";
+      return $btn;
+    });
+
+    if (method_exists($this, '_dataColumn')) {
+        $dataTables = $this->_dataColumn($dataTables, $request);
+    }
+    $dataTables->rawColumns($this->rawColumns);
+    return $dataTables->addIndexColumn()->toJson();
   }
 
   public function index()
   {
-    dd($this);
+    try {
+      $info = $this->info();
+        return view($this->views['index'])->with(['info' => $info]);
+    } catch (\Exception $e) {
+        $this->_handleDBTransactionError($e);
+    }    
   }
 
   public function _handleDBTransactionError($e)
@@ -70,4 +103,16 @@ class BaseController extends Controller {
       toastr()->success('Hapus Data Berhasil', 'Berhasil!');
       return redirect()->back()->withInput(request()->input());
   }
+
+  public function info()
+  {
+    $info['title'] = $this->title;
+    $info['description'] = $this->description;
+    $info['breadcrumbs'] = $this->breadcrumbs;
+    $info['routes'] = $this->routes;
+    $info['datatableRows'] = $this->datatableRows;
+
+    return (object)$info;
+  }
+
 }

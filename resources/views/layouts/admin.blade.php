@@ -31,6 +31,8 @@
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('admin-lte/plugins/summernote/summernote-bs4.min.css')}}">
         <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css')}}">
+
+        
         <style>
             .navbar-nav > .user-menu > .dropdown-menu > .user-body {
                 padding: 15px;
