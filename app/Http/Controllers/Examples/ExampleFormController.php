@@ -8,7 +8,7 @@ use App\Http\Controllers\BaseComponent\BaseController;
 
 class ExampleFormController extends BaseController
 {
-    protected $f_model = 'Examples';
+    protected $f_model = 'Example';
     protected $title = 'Examples';
     protected $route = 'examples-crud';    
 
