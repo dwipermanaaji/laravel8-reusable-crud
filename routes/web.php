@@ -37,7 +37,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     Route::resource('examples-crud', ExampleFormController::class);
-    Route::get('datatable/examples-crud',[ ExampleFormController::class,'dataTable'])->name('example.datatable');
+    Route::get('datatable/examples-crud',[ ExampleFormController::class,'dataTable'])->name('examples-crud.datatable');
 
     //ResourcesController
     Route::get('{collection}',[ResourcesController::class, 'index'])->name('resources.index');

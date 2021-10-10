@@ -29,7 +29,7 @@ trait GenerateRoute
       $this->routes['edit'] = $this->generateRoute('edit');
       $this->routes['update'] = $this->generateRoute('update');
       $this->routes['destroy'] = $this->generateRoute('destroy');
-      $this->routes['dataTable'] = $this->generateRoute('dataTable');
+      $this->routes['dataTable'] = $this->generateRoute('datatable');
   }
 
   protected function generateRoute($method)
