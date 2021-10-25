@@ -75,6 +75,7 @@ class DCrudCommand extends Command
             $isAdded = File::append($routeFile,
                 "\nRoute::group(['middleware' => ['auth:sanctum', 'verified']], function () {"
                 . "\n\t" . implode("\n\t", $this->addRoutes())
+                . "\n\t" . implode("\n\t", $this->addRouteDataTable())
                 . "\n});"
             );
             dd($this->routeName);
