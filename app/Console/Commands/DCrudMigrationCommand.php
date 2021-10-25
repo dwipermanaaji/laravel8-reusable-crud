@@ -58,7 +58,7 @@ class DCrudMigrationCommand extends GeneratorCommand
         }
 
     $schemaUp = "\tSchema::create('" . $tableName . "', function(Blueprint \$table) {
-            \$table->increments('" . $primaryKey . "');
+            \$table->id('" . $primaryKey . "');
             ". $schemaFields ."\$table->timestamps();
             // \$table->softDeletes();
         });";
