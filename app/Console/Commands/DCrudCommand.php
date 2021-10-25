@@ -56,8 +56,8 @@ class DCrudCommand extends Command
         $viewPath = $this->option('view-path') ;
 
         $route = $this->option('route');
-        $route = ($route !=null ) ? $route : Str::replace('\\-', '.', Str::kebab($name));
-        
+        $route = ($route !=null ) ? $route : Str::kebab($className);
+
         $controllerNamespace = ($this->option('controller-namespace'));
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
         $modelNamespace = $this->option('model-namespace');
@@ -86,6 +86,6 @@ class DCrudCommand extends Command
     }    
     protected function addRouteDataTable()
     {
-        return ["Route::get('datatable/" . Str::replace('.', '/', $this->routeName) . "',['App\Http\Controllers\\" . $this->controller . "','dataTable'])->name('".Str::replace('.', '/', $this->routeName)."datatable');"];
+        return ["Route::get('datatable/" . Str::replace('.', '/', $this->routeName) . "',['App\Http\Controllers\\" . $this->controller . "','dataTable'])->name('".$this->routeName.".datatable');"];
     }
 }
