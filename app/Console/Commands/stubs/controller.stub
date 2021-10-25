@@ -25,6 +25,7 @@ class DummyClass  extends BaseController
         return $forms;
     }
   
+    {{customPage}}
 
 
     // protected $customPage = [

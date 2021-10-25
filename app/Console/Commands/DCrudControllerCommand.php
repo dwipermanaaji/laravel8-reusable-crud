@@ -38,7 +38,7 @@ class DCrudControllerCommand extends GeneratorCommand
         $viewPath = $this->option('view-path');
         $fields = $this->option('fields');
         $fields = explode(',', $fields);
-        dd($viewPath);
+ 
         $data = [];
         if ($fields) {
             $x = 0;
@@ -73,6 +73,18 @@ class DCrudControllerCommand extends GeneratorCommand
             $forms .= $form;
         }
 
+        $customPage = '';
+        if($viewPath!=null){
+            $customPage = "
+            protected \$customPage = [
+                'index' => ".$viewPath.".index,
+                'show' => ".$viewPath.".show,
+                'create' => ".$viewPath.".create,
+                'edit' => ".$viewPath.".edit,
+                'form' => ".$viewPath.".form,
+            ];";
+        }
+
 
         return $this->replaceNamespace($stub, $name)
             ->replaceModelName($stub, $modelName)
@@ -80,6 +92,7 @@ class DCrudControllerCommand extends GeneratorCommand
             ->replaceRoute($stub, $route)
             ->replaceRowsdatatableColumn($stub, $rowsdatatableColumn)
             ->replaceForms($stub, $forms)
+            ->replaceCustomPage($stub, $customPage)
             ->replaceClass($stub, $name);
     }
 
@@ -122,6 +135,13 @@ class DCrudControllerCommand extends GeneratorCommand
     {
         $stub = str_replace(
             '{{forms}}', $forms, $stub
+        );
+        return $this;
+    }
+    protected function replaceCustomPage(&$stub, $customPage)
+    {
+        $stub = str_replace(
+            '{{customPage}}', $customPage, $stub
         );
         return $this;
     }
