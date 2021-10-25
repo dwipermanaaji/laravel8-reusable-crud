@@ -62,8 +62,8 @@ class DCrudCommand extends Command
         $modelNamespace = $this->option('model-namespace');
         
         $this->call('dcrud:controller', ['name' => $controllerNamespace , '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route]);
-        // $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
-        // $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
+        $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
+        $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
         dd($fieldsArray);
 
 

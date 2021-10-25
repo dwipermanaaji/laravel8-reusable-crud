@@ -50,7 +50,7 @@ class DCrudControllerCommand extends GeneratorCommand
 
         $rowsdatatableColumn = "\t";
         foreach ($data as $item) {
-            $dataTable = "['data' => '".$item['name']."', 'title' => '".Str::headline($item['name'])."', 'orderable' => true, 'searchable' => true]\n\t\t\t";
+            $dataTable = "['data' => '".$item['name']."', 'title' => '".Str::headline($item['name'])."', 'orderable' => true, 'searchable' => true],\n\t\t\t";
             $rowsdatatableColumn .= $dataTable;
         }
 

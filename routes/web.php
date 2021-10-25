@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApaTest\ExampleAjaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Examples\ExampleFormController;
 use App\Http\Controllers\Pengaturan\RoleController;
@@ -38,6 +39,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('examples-crud', ExampleFormController::class);
     Route::get('datatable/examples-crud',[ExampleFormController::class,'dataTable'])->name('examples-crud.datatable');
+
+    Route::resource('apa-test/example-aja', ExampleAjaController::class);
+    Route::get('datatable/apa-test/example-aja',[ExampleAjaController::class,'dataTable'])->name('apa-test.example-aja.datatable');
+
 
     //ResourcesController
     // Route::get('{collection}',[ResourcesController::class, 'index'])->name('resources.index');
