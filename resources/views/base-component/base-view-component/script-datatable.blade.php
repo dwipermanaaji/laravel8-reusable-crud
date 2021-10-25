@@ -30,7 +30,7 @@
               "type": "get",
           },
           columns: [
-              @foreach($info->datatableRows as $item)
+              @foreach($info->datatableColumn as $item)
                   {
                       "data":"{{ $item['data'] }}",
                       "name":"{{ $item['data'] }}",

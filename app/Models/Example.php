@@ -6,7 +6,7 @@ use App\Traits\UuidForKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Example extends Model
+class Example extends Resource
 {
     use HasFactory;
     use UuidForKey;

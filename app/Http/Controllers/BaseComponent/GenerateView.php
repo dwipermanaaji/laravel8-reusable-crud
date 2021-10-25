@@ -9,7 +9,8 @@ trait GenerateView
     'index' => null,
     'show' => null,
     'create' => null,
-    'edit' => null
+    'edit' => null,
+    'form' => null,
   ];
 
 
@@ -20,6 +21,8 @@ trait GenerateView
     $this->views['show'] = $this->generateView('show');
     $this->views['create'] = $this->generateView('create');
     $this->views['edit'] = $this->generateView('edit');
+    $this->views['form'] = $this->generateView('form');
+    
   }
 
   protected function generateView($method)

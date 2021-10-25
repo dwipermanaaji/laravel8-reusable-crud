@@ -1,7 +1,7 @@
 <table id="dataTable" class="table table-bordered table-striped">
   <thead>
       <tr>
-        @foreach ($info->datatableRows as $item)
+        @foreach ($info->datatableColumn as $item)
             {{ !isset($item['data']) ? dd('rows[data] harap di isi') : ''  }}
             <th
                 {{ isset($item['width']) ? 'width='.$item['width'].'' : '' }}
