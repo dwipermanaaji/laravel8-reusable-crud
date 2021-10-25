@@ -49,10 +49,11 @@ class DCrudCommand extends Command
         $commaSeparetedString = implode("', '", $fillableArray);
         $fillable = "['" . $commaSeparetedString . "']";
 
-        $viewPath =  Str::replace('\\-', '.', Str::kebab($name));
-        if($this->option('view-path') != null){
-            $viewPath = $this->option('view-path') .'.'. Str::kebab($className);
-        }
+        // $viewPath =  Str::replace('\\-', '.', Str::kebab($name));
+        // if($this->option('view-path') != null){
+        //     $viewPath = $this->option('view-path') .'.'. Str::kebab($className);
+        // }
+        $viewPath = $this->option('view-path') ;
 
         $route = $this->option('route');
         $route = ($route !=null ) ? $route : Str::replace('\\-', '.', Str::kebab($name));
@@ -61,7 +62,7 @@ class DCrudCommand extends Command
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
         $modelNamespace = $this->option('model-namespace');
         
-        $this->call('dcrud:controller', ['name' => $controllerNamespace , '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route]);
+        $this->call('dcrud:controller', ['name' => $controllerNamespace ,'view-path'=>$viewPath, '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route]);
         $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
         $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
         dd($fieldsArray);

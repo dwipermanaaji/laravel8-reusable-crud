@@ -13,6 +13,7 @@ class DCrudControllerCommand extends GeneratorCommand
                             {--model-name= : The name of the Model.}
                             {--route= : The name of the route name.}
                             {--fields= : Fields name for the form & model.}
+                            {--view-path= : The name of the view path.}
                             ';
 
     protected $description = 'Create a new resource controller.';
@@ -34,9 +35,10 @@ class DCrudControllerCommand extends GeneratorCommand
         $stub = $this->files->get($this->getStub());
         $modelName = $this->option('model-name');
         $route = $this->option('route');
+        $viewPath = $this->option('view-path');
         $fields = $this->option('fields');
         $fields = explode(',', $fields);
-
+        dd($viewPath);
         $data = [];
         if ($fields) {
             $x = 0;

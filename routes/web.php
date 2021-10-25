@@ -44,8 +44,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('datatable/apa-test/example-aja',[ExampleAjaController::class,'dataTable'])->name('example-aja.datatable');
 
 
-    //ResourcesController
-    // Route::get('{collection}',[ResourcesController::class, 'index'])->name('resources.index');
+
 });
 
 
