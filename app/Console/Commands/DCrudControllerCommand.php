@@ -47,17 +47,37 @@ class DCrudControllerCommand extends GeneratorCommand
                 $x++;
             }
         }
-        $rowsdatatableColumn = '';
+
+        $rowsdatatableColumn = "\t";
         foreach ($data as $item) {
             $dataTable = "['data' => '".$item['name']."', 'title' => '".Str::headline($item['name'])."', 'orderable' => true, 'searchable' => true]\n\t\t\t";
             $rowsdatatableColumn .= $dataTable;
         }
+
+        $forms = '';
+        foreach ($data as $key => $item) {
+            $form = "'".$item['name']."'=>[
+                'name'=> '".$item['name']."',
+                'type'=> 'text',
+                'label'=> '".Str::headline($item['name'])."',
+                'option'=> [
+                    'class' => 'form-control',
+                    'required' => 'required',
+                ],
+            ],";
+            if($key != 0){
+                $form .= "\n\t\t\t";
+            }
+            $forms .= $form;
+        }
+
 
         return $this->replaceNamespace($stub, $name)
             ->replaceModelName($stub, $modelName)
             ->replaceModelTitle($stub, Str::headline(class_basename($modelName)))
             ->replaceRoute($stub, $route)
             ->replaceRowsdatatableColumn($stub, $rowsdatatableColumn)
+            ->replaceForms($stub, $forms)
             ->replaceClass($stub, $name);
     }
 
@@ -96,4 +116,12 @@ class DCrudControllerCommand extends GeneratorCommand
 
         return $this;
     }
+    protected function replaceForms(&$stub, $forms)
+    {
+        $stub = str_replace(
+            '{{forms}}', $forms, $stub
+        );
+        return $this;
+    }
+
 }

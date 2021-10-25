@@ -16,6 +16,17 @@ class DummyClass  extends BaseController
       {{rowsdatatableColumn}}['data' => 'action', 'title' => 'Opsi', 'orderable' => false, 'searchable' => false, 'width' => '130px'],
     ];
 
+
+    public function _setForm($method)
+    {
+        $forms = [
+            {{forms}}
+        ];
+        return $forms;
+    }
+  
+
+
     // protected $customPage = [
     //     'index' => null,
     //     'show' => null,
