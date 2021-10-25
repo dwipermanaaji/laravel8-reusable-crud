@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers\BaseComponent;
+namespace App\Http\Controllers\BaseComponent\Services;
 
 trait GenerateRoute
 {

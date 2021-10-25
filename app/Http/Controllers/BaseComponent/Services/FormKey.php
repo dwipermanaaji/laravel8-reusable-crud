@@ -19,4 +19,5 @@ class FormKey
     public $edit = true;
     public $formType = null;
     public $route = null;
+    public $colForm = 6;
 }

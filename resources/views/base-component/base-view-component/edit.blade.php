@@ -13,7 +13,7 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{route($info->routes['index'])}}">{{$info->title}}</a></li>
-                            <li class="breadcrumb-item active">Form Create</li>
+                            <li class="breadcrumb-item active">Form Edit</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -29,12 +29,13 @@
                         <!-- jquery validation -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Form Create</h3>
+                                <h3 class="card-title">Form Edit</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="quickForm" method="POST" action="{{route($info->routes['store'])}}">
+                            <form id="quickForm" method="POST" action="{{route($info->routes['update'],$obj->$primaryKey)}}">
                               @csrf
+                              @method('PUT')
                               <div class="card-body">
                                 @include($info->views['form'])
                               </div>

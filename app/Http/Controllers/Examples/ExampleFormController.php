@@ -13,6 +13,6 @@ class ExampleFormController extends BaseController
     protected $route = 'examples-crud';    
 
     protected $customPage = [
-        'form' => 'examples.example-crud.form'
+        // 'form' => 'examples.example-crud.form'
     ];
 }
