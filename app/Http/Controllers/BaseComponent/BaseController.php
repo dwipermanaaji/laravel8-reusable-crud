@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BaseComponent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Models\Resource;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Crypt;
@@ -27,6 +28,8 @@ class BaseController extends Controller {
   protected $segments = [];
   protected $segment = null;
 
+  protected $structures = [];
+
   private $rawColumns = ['action'];
 
   public $datatableRows = [];
@@ -40,15 +43,30 @@ class BaseController extends Controller {
   }
 
 
-  protected function setModel()
+  protected function setModel(Resource $model)
   {
     if($this->f_model == null)
       $this->_handleDBTransactionError('f_model can not be empty');
 
-    if(!file_exists(app_path('Models/'.$this->f_model.'.php')))
-      $this->_handleDBTransactionError(app_path('Models/'.$this->f_model.'.php Not Found'));
+    if(file_exists(app_path('Models/'.$this->f_model.'.php'))){
+      $this->model = app("App\Models\\".$this->f_model);
+    }else{
+      if($model->checkTableExists($this->segment)) {
+          $this->model = $model;
+          $this->model->setTable($this->segment);
+          
+    $this->model->setTable('Examples');
+
+
+      }      
+    }
+      // $this->_handleDBTransactionError(app_path('Models/'.$this->f_model.'.php Not Found'));
     
-    $this->model = app("App\Models\\".$this->f_model);
+    $this->model->setTable('Examples');
+
+    if($this->model) {
+      $this->structures = $this->model->getStructure();
+    }
   }
 
   public function dataTable(Request $request)
