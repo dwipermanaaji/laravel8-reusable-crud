@@ -86,6 +86,6 @@ class DCrudCommand extends Command
     }    
     protected function addRouteDataTable()
     {
-        return ["Route::get('datatable/" . Str::replace('.', '/', $this->routeName) . "',['App\Http\Controllers\\" . $this->controller . "','dataTable'])->name('".Str::replace('.', '/', $this->routeName)."datatable')"];
+        return ["Route::get('datatable/" . Str::replace('.', '/', $this->routeName) . "',['App\Http\Controllers\\" . $this->controller . "','dataTable'])->name('".Str::replace('.', '/', $this->routeName)."datatable');"];
     }
 }
