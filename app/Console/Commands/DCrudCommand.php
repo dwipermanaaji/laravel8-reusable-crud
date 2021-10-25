@@ -73,7 +73,7 @@ class DCrudCommand extends Command
             $this->routeName = $route;
             
             $isAdded = File::append($routeFile,
-                "\nRoute::group(['middleware' => ['web']], function () {"
+                "\nRoute::group(['middleware' => ['auth:sanctum', 'verified']], function () {"
                 . "\n\t" . implode("\n\t", $this->addRoutes())
                 . "\n});"
             );
@@ -81,6 +81,6 @@ class DCrudCommand extends Command
         }
     }
     protected function addRoutes() {
-        return ["Route::resource('" . $this->routeName . "', '" . $this->controller . "');"];
+        return ["Route::resource('" . Str::replace('.', '/', $this->routeName) . "', 'App\Http\Controllers\\" . $this->controller . "');"];
     }    
 }
