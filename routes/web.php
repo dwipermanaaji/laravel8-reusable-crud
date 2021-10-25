@@ -48,3 +48,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 
+
+Route::group(['middleware' => ['web']], function () {
+	Route::resource('apa-test/enak', 'ApaTest\EnakController');
+});

@@ -62,11 +62,25 @@ class DCrudCommand extends Command
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
         $modelNamespace = $this->option('model-namespace');
         
-        $this->call('dcrud:controller', ['name' => $controllerNamespace ,'--view-path'=>$viewPath, '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route]);
-        $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
-        $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
-        dd($fieldsArray);
-
-
+        // $this->call('dcrud:controller', ['name' => $controllerNamespace ,'--view-path'=>$viewPath, '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route]);
+        // $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
+        // $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
+        
+        $this->callSilent('optimize');
+        $routeFile = base_path('routes/web.php'); 
+        if(file_exists($routeFile)){
+            $this->controller = $controllerNamespace;
+            $this->routeName = $route;
+            
+            $isAdded = File::append($routeFile,
+                "\nRoute::group(['middleware' => ['web']], function () {"
+                . "\n\t" . implode("\n\t", $this->addRoutes())
+                . "\n});"
+            );
+            dd($this->routeName);
+        }
     }
+    protected function addRoutes() {
+        return ["Route::resource('" . $this->routeName . "', '" . $this->controller . "');"];
+    }    
 }
