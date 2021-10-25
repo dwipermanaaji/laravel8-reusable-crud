@@ -74,16 +74,16 @@ class DCrudControllerCommand extends GeneratorCommand
         }
 
         $customPage = '';
-        if($viewPath!=null){
-            $customPage = "
-            protected \$customPage = [
-                'index' => ".$viewPath.".index,
-                'show' => ".$viewPath.".show,
-                'create' => ".$viewPath.".create,
-                'edit' => ".$viewPath.".edit,
-                'form' => ".$viewPath.".form,
-            ];";
-        }
+    if($viewPath!=null){
+    $customPage = "
+    protected \$customPage = [
+        'index' => '".$viewPath.".index',
+        'show' => '".$viewPath.".show',
+        'create' => '".$viewPath.".create',
+        'edit' => '".$viewPath.".edit',
+        'form' => '".$viewPath.".form',
+    ];";
+    }
 
 
         return $this->replaceNamespace($stub, $name)
