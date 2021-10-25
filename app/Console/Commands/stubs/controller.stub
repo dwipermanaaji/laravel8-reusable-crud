@@ -12,6 +12,8 @@ class DummyClass  extends BaseController
     protected $title = '{{title}}';
     protected $route = '{{route}}';    
 
+    {{customPage}}
+
     public $rowsdatatableColumn = [
       {{rowsdatatableColumn}}['data' => 'action', 'title' => 'Opsi', 'orderable' => false, 'searchable' => false, 'width' => '130px'],
     ];
@@ -25,7 +27,7 @@ class DummyClass  extends BaseController
         return $forms;
     }
   
-    {{customPage}}
+
 
 
     // protected $customPage = [
