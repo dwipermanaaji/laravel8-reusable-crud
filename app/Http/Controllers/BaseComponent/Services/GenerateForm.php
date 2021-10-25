@@ -49,6 +49,7 @@ trait GenerateForm
     }else{
       return false;
     }
+
     $obj = (object)$data;
     return $obj;
   }

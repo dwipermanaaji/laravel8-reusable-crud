@@ -145,7 +145,7 @@ class BaseController extends Controller {
       DB::commit();
 
       if (method_exists($this, '_redirectAfterSave') && $savedObj){
-        return $this->_redirectAfterSave($request, $savedObj, 'create');
+        return $this->_redirectAfterSave($request, $savedObj, 'edit');
       }
     
       toastr()->success('Update Data Berhasil', 'Berhasil!');
