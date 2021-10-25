@@ -40,8 +40,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('examples-crud', ExampleFormController::class);
     Route::get('datatable/examples-crud',[ExampleFormController::class,'dataTable'])->name('examples-crud.datatable');
 
-    Route::resource('apa-test/example-aja', ExampleAjaController::class,['as'=>'apa-test']);
-    Route::get('datatable/apa-test/example-aja',[ExampleAjaController::class,'dataTable'])->name('apa-test.example-aja.datatable');
+    Route::resource('apa-test/example-aja', ExampleAjaController::class);
+    Route::get('datatable/apa-test/example-aja',[ExampleAjaController::class,'dataTable'])->name('example-aja.datatable');
 
 
     //ResourcesController
