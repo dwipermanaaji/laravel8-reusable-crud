@@ -16,7 +16,7 @@ class DCrudCommand extends Command
         {--controller-namespace= : Namespace of the controller.}
         {--model-namespace= : Namespace of the controller.}
         {--pk=id : The name of the primary key.}
-        {--route= : The name of the route name.}
+        {--route=yes : Include Crud route to routes.php? yes|no.}
     ';
 
     protected $description = 'Command description';
@@ -55,8 +55,7 @@ class DCrudCommand extends Command
         // }
         $viewPath = $this->option('view-path') ;
 
-        $route = Str::kebab($this->option('route'));
-        $route = ($route !=null ) ? $route : Str::kebab($className);
+        $route = Str::kebab($className);
 
         $controllerNamespace = ($this->option('controller-namespace'));
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
@@ -68,7 +67,7 @@ class DCrudCommand extends Command
         
         $this->callSilent('optimize');
         $routeFile = base_path('routes/web.php'); 
-        if(file_exists($routeFile)){
+        if(file_exists($routeFile) && (strtolower($this->option('route')) === 'yes')){
             $this->controller = $controllerNamespace;
             $this->routeName = $route;
             
@@ -78,14 +77,16 @@ class DCrudCommand extends Command
                 . "\n\t" . implode("\n\t", $this->addRouteDataTable())
                 . "\n});"
             );
-            dd($this->routeName);
         }
+        $this->callSilent('migrate');
+        $this->callSilent('optimize');
+        $this->callSilent('route:clear');
     }
     protected function addRoutes() {
-        return ["Route::resource('" . Str::replace('.', '/', $this->routeName) . "', 'App\Http\Controllers\\" . $this->controller . "');"];
+        return ["Route::resource('" . $this->routeName. "', 'App\Http\Controllers\\" . $this->controller . "');"];
     }    
     protected function addRouteDataTable()
     {
-        return ["Route::get('datatable/" . Str::replace('.', '/', $this->routeName) . "',['App\Http\Controllers\\" . $this->controller . "','dataTable'])->name('".$this->routeName.".datatable');"];
+        return ["Route::get('datatable/" . $this->routeName. "',['App\Http\Controllers\\" . $this->controller . "','dataTable'])->name('".$this->routeName.".datatable');"];
     }
 }
