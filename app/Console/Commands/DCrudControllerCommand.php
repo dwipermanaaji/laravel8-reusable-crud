@@ -2,19 +2,23 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Services\TypeLookupService;
 use Illuminate\Console\GeneratorCommand;
 use Str;
 
 class DCrudControllerCommand extends GeneratorCommand
 {
+    use TypeLookupService;
 
     protected $signature = 'dcrud:controller
                             {name : The name of the controler.}
                             {--model-name= : The name of the Model.}
-                            {--route= : The name of the route name.}
+                            {--route-name= : The name of the route name.}
                             {--fields= : Fields name for the form & model.}
                             {--view-path= : The name of the view path.}
+                            {--folder-view= : Folder Views.}
                             {--example}
+                            {--form}
                             ';
 
     protected $description = 'Create a new resource controller.';
@@ -35,11 +39,14 @@ class DCrudControllerCommand extends GeneratorCommand
     {
         $stub = $this->files->get($this->getStub());
         $modelName = $this->option('model-name');
-        $route = $this->option('route');
+        $routeName = $this->option('route-name');
         $viewPath = $this->option('view-path');
         $fields = $this->option('fields');
         $fields = explode(',', $fields);
         $example = $this->option('example');
+        $form = $this->option('form');
+        $folderView = $this->option('folder-view');
+        
 
         $data = [];
         $forms = '';
@@ -49,7 +56,7 @@ class DCrudControllerCommand extends GeneratorCommand
             foreach ($fields as $field) {
                 $fieldArray = explode(':', $field);
                 $data[$x]['name'] = trim($fieldArray[0]);
-                $data[$x]['type'] = (isset($fieldArray[1])) ? trim($fieldArray[1]) : 'text';
+                $data[$x]['type'] = (isset($fieldArray[1])) ? trim($fieldArray[1]) : 'string';
                 $x++;
             }
 
@@ -63,7 +70,7 @@ class DCrudControllerCommand extends GeneratorCommand
             foreach ($data as $key => $item) {
                 $form = "'".$item['name']."'=>[
                     'name'=> '".$item['name']."',
-                    'type'=> 'text',
+                    'type'=> '".$this->typeLookup[$item['type']]."',
                     'label'=> '".Str::headline($item['name'])."',
                     'option'=> [
                         'class' => 'form-control',
@@ -80,10 +87,17 @@ class DCrudControllerCommand extends GeneratorCommand
         }
 
 
-
-
     $customPage = '';
-    if($viewPath!=null){
+    if($form){
+    $customPage = "
+    protected \$customPage = [
+        'form' => '".$folderView.".form',
+    ];
+    ";
+    }
+
+    if($viewPath != null){
+    $viewPath = Str::replace('\\', '.', Str::kebab($viewPath));
     $customPage = "
     protected \$customPage = [
         'index' => '".$viewPath.".index',
@@ -91,14 +105,15 @@ class DCrudControllerCommand extends GeneratorCommand
         'create' => '".$viewPath.".create',
         'edit' => '".$viewPath.".edit',
         'form' => '".$viewPath.".form',
-    ];";
+    ];
+    ";
     }
 
 
         return $this->replaceNamespace($stub, $name)
             ->replaceModelName($stub, $modelName)
             ->replaceModelTitle($stub, Str::headline(class_basename($modelName)))
-            ->replaceRoute($stub, $route)
+            ->replaceRoute($stub, $routeName)
             ->replaceRowsdatatableColumn($stub, $rowsdatatableColumn)
             ->replaceForms($stub, $forms)
             ->replaceCustomPage($stub, $customPage)
@@ -125,10 +140,10 @@ class DCrudControllerCommand extends GeneratorCommand
         );
         return $this;
     }
-    protected function replaceRoute(&$stub, $route)
+    protected function replaceRoute(&$stub, $routeName)
     {
         $stub = str_replace(
-            '{{route}}', $route, $stub
+            '{{route-name}}', $routeName, $stub
         );
 
         return $this;

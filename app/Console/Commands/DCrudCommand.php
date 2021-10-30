@@ -16,8 +16,10 @@ class DCrudCommand extends Command
         {--controller-namespace= : Namespace of the controller.}
         {--model-namespace= : Namespace of the controller.}
         {--pk=id : The name of the primary key.}
-        {--route=yes : Include Crud route to routes.php? yes|no.}
+        {--route : Include Crud route to routes.php.}
         {--example : Include exmaple code with comment}
+        {--form : Include form.blade.php in folder views }
+        
     ';
 
     protected $description = 'Command description';
@@ -37,7 +39,10 @@ class DCrudCommand extends Command
         $migrationName = Str::plural(Str::lower($className));
         $tableName = $migrationName;
         $viewName = Str::lower($name);
+        $routeName = Str::kebab($className);
+
         $example = $this->option('example');
+        $form = $this->option('form');
 
 
         $primaryKey = $this->option('pk');
@@ -51,28 +56,47 @@ class DCrudCommand extends Command
 
         $commaSeparetedString = implode("', '", $fillableArray);
         $fillable = "['" . $commaSeparetedString . "']";
-
-        // $viewPath =  Str::replace('\\-', '.', Str::kebab($name));
-        // if($this->option('view-path') != null){
-        //     $viewPath = $this->option('view-path') .'.'. Str::kebab($className);
-        // }
         $viewPath = $this->option('view-path') ;
 
-        $route = Str::kebab($className);
+
+        $folderView =  Str::replace('\\-', '.', Str::kebab($name));
+        if($this->option('view-path') != null){
+            $folderView = $this->option('view-path') .'.'. Str::kebab($className);
+        }
+
+        
 
         $controllerNamespace = ($this->option('controller-namespace'));
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
         $modelNamespace = $this->option('model-namespace');
         
-        $this->call('dcrud:controller', ['name' => $controllerNamespace ,'--view-path'=>$viewPath, '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route, '--example'=>$example]);
+        $this->call('dcrud:controller', [
+                    'name' => $controllerNamespace ,
+                    '--view-path'=>$viewPath, 
+                    '--fields'=>$fields,
+                    '--model-name' => $modelName, 
+                    '--route-name'=>$routeName, 
+                    '--example'=>$example, 
+                    '--form'=>$form,
+                    '--folder-view'=>$folderView
+                ]);
         $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
         $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
         
+        if($form){
+            $this->call('dcrud:view', [
+                'name' => $viewName, 
+                '--fields' => $fields, 
+                '--view-path' => $viewPath,
+                '--route-name'=>$routeName,
+            ]);
+        }
+
         $this->callSilent('optimize');
         $routeFile = base_path('routes/web.php'); 
-        if(file_exists($routeFile) && (strtolower($this->option('route')) === 'yes')){
+        if(file_exists($routeFile) && ($this->option('route'))){
             $this->controller = $controllerNamespace;
-            $this->routeName = $route;
+            $this->routeName = $routeName;
             
             $isAdded = File::append($routeFile,
                 "\nRoute::group(['middleware' => ['auth:sanctum', 'verified']], function () {"
@@ -80,10 +104,9 @@ class DCrudCommand extends Command
                 . "\n\t" . implode("\n\t", $this->addRouteDataTable())
                 . "\n});"
             );
+            $this->callSilent('route:clear');
         }
-        // $this->callSilent('migrate');
-        $this->callSilent('optimize');
-        $this->callSilent('route:clear');
+
     }
     protected function addRoutes() {
         return ["Route::resource('" . $this->routeName. "', 'App\Http\Controllers\\" . $this->controller . "');"];

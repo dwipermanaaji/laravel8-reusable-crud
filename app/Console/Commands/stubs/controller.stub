@@ -10,7 +10,7 @@ class DummyClass  extends BaseController
 {
     protected $f_model = '{{modelName}}';
     protected $title = '{{title}}';
-    protected $route = '{{route}}';    
+    protected $route = '{{route-name}}';    
 
     {{customPage}}
 
