@@ -14,6 +14,7 @@ class DCrudControllerCommand extends GeneratorCommand
                             {--route= : The name of the route name.}
                             {--fields= : Fields name for the form & model.}
                             {--view-path= : The name of the view path.}
+                            {--example}
                             ';
 
     protected $description = 'Create a new resource controller.';
@@ -38,9 +39,12 @@ class DCrudControllerCommand extends GeneratorCommand
         $viewPath = $this->option('view-path');
         $fields = $this->option('fields');
         $fields = explode(',', $fields);
- 
+        $example = $this->option('example');
+
         $data = [];
-        if ($fields) {
+        $forms = '';
+        $rowsdatatableColumn = "";
+        if ($fields[0] != '') {
             $x = 0;
             foreach ($fields as $field) {
                 $fieldArray = explode(':', $field);
@@ -48,32 +52,37 @@ class DCrudControllerCommand extends GeneratorCommand
                 $data[$x]['type'] = (isset($fieldArray[1])) ? trim($fieldArray[1]) : 'text';
                 $x++;
             }
-        }
 
-        $rowsdatatableColumn = "\t\t";
-        foreach ($data as $item) {
-            $dataTable = "['data' => '".$item['name']."', 'title' => '".Str::headline($item['name'])."', 'orderable' => true, 'searchable' => true],\n\t\t\t";
-            $rowsdatatableColumn .= $dataTable;
-        }
 
-        $forms = '';
-        foreach ($data as $key => $item) {
-            $form = "'".$item['name']."'=>[
-                'name'=> '".$item['name']."',
-                'type'=> 'text',
-                'label'=> '".Str::headline($item['name'])."',
-                'option'=> [
-                    'class' => 'form-control',
-                    'required' => 'required',
-                ],
-            ],";
-            if($key != 0){
-                $form .= "\n\t\t\t";
+            $rowsdatatableColumn = "\t\t";
+            foreach ($data as $item) {
+                $dataTable = "['data' => '".$item['name']."', 'title' => '".Str::headline($item['name'])."', 'orderable' => true, 'searchable' => true],\n\t\t\t";
+                $rowsdatatableColumn .= $dataTable;
             }
-            $forms .= $form;
+
+            foreach ($data as $key => $item) {
+                $form = "'".$item['name']."'=>[
+                    'name'=> '".$item['name']."',
+                    'type'=> 'text',
+                    'label'=> '".Str::headline($item['name'])."',
+                    'option'=> [
+                        'class' => 'form-control',
+                        'required' => 'required',
+                        'placeholder'=>'Enter ".Str::headline($item['name'])."',
+                    ],
+                ],";
+                if($key != 0){
+                    $form .= "\n\t\t\t";
+                }
+                $forms .= $form;
+            }
+            
         }
 
-        $customPage = '';
+
+
+
+    $customPage = '';
     if($viewPath!=null){
     $customPage = "
     protected \$customPage = [
@@ -93,6 +102,7 @@ class DCrudControllerCommand extends GeneratorCommand
             ->replaceRowsdatatableColumn($stub, $rowsdatatableColumn)
             ->replaceForms($stub, $forms)
             ->replaceCustomPage($stub, $customPage)
+            ->replaceExample($stub, $example)
             ->replaceClass($stub, $name);
     }
 
@@ -146,4 +156,15 @@ class DCrudControllerCommand extends GeneratorCommand
         return $this;
     }
 
+    protected function replaceExample(&$stub, $example = false)
+    {
+        $exampleCode = "";
+        if($example){
+            $exampleCode = $this->files->get(__DIR__ . '/stubs/exampleController.stub');
+        }
+        $stub = str_replace(
+            '{{example}}', $exampleCode, $stub
+        );
+        return $this;   
+    }
 }

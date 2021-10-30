@@ -17,6 +17,7 @@ class DCrudCommand extends Command
         {--model-namespace= : Namespace of the controller.}
         {--pk=id : The name of the primary key.}
         {--route=yes : Include Crud route to routes.php? yes|no.}
+        {--example : Include exmaple code with comment}
     ';
 
     protected $description = 'Command description';
@@ -36,6 +37,8 @@ class DCrudCommand extends Command
         $migrationName = Str::plural(Str::lower($className));
         $tableName = $migrationName;
         $viewName = Str::lower($name);
+        $example = $this->option('example');
+
 
         $primaryKey = $this->option('pk');
         $fields = $this->option('fields');
@@ -61,7 +64,7 @@ class DCrudCommand extends Command
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
         $modelNamespace = $this->option('model-namespace');
         
-        $this->call('dcrud:controller', ['name' => $controllerNamespace ,'--view-path'=>$viewPath, '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route]);
+        $this->call('dcrud:controller', ['name' => $controllerNamespace ,'--view-path'=>$viewPath, '--fields'=>$fields,'--model-name' => $modelName, '--route'=>$route, '--example'=>$example]);
         $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
         $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
         
@@ -78,7 +81,7 @@ class DCrudCommand extends Command
                 . "\n});"
             );
         }
-        $this->callSilent('migrate');
+        // $this->callSilent('migrate');
         $this->callSilent('optimize');
         $this->callSilent('route:clear');
     }
