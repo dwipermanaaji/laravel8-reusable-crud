@@ -100,10 +100,6 @@ class DCrudControllerCommand extends GeneratorCommand
     $viewPath = Str::replace('\\', '.', Str::kebab($viewPath));
     $customPage = "
     protected \$customPage = [
-        'index' => '".$viewPath.".index',
-        'show' => '".$viewPath.".show',
-        'create' => '".$viewPath.".create',
-        'edit' => '".$viewPath.".edit',
         'form' => '".$viewPath.".form',
     ];
     ";

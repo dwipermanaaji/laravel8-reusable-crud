@@ -37,10 +37,11 @@ class DCrudViewCommand extends Command
         $viewDirectory = config('view.paths')[0] . '/';
         if ($this->option('view-path')) {
             $userPath = $this->option('view-path');
-            $path = $viewDirectory . $userPath . '/' . class_basename($crudName) . '/';
+            $path = $viewDirectory . $userPath . '/' ;
         } else {
             $path = $viewDirectory . $crudName . '/';
         }
+
         if (!File::isDirectory($path)) {
             File::makeDirectory($path, 0755, true);
         }
