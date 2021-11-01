@@ -44,6 +44,8 @@ trait GenerateForm
         $data[$value['name']]->route = isset($value['route']) ? $value['route'] : true;
         $data[$value['name']]->formType = $method;
         $data[$value['name']]->colForm = isset($value['colForm']) ? $value['colForm'] : 6;
+        $data[$value['name']]->validate = isset($value['validate']) ? $value['validate'] : [];
+        $data[$value['name']]->validateMessage = isset($value['validateMessage']) ? $value['validateMessage'] : [];
         
       }
     }else{

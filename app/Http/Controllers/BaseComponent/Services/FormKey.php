@@ -20,4 +20,7 @@ class FormKey
     public $formType = null;
     public $route = null;
     public $colForm = 6;
+    public $validate = [];
+    public $validateMessage = [];
+    
 }
