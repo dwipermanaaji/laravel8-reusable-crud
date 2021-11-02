@@ -5,6 +5,8 @@ use Illuminate\Support\Str;
 trait GenerateForm
 {
 
+  protected $validateMessage = [];
+
   public function _setForm($method)
   {
     $forms = [];
@@ -25,7 +27,7 @@ trait GenerateForm
   }
 
 
-  public function setForm($forms, $method)
+  protected function setForm($forms, $method)
   {
     $data = [];
     if(isset($forms)){
@@ -43,9 +45,9 @@ trait GenerateForm
         $data[$value['name']]->edit = isset($value['edit']) ? $value['edit'] : true;
         $data[$value['name']]->route = isset($value['route']) ? $value['route'] : true;
         $data[$value['name']]->formType = $method;
-        $data[$value['name']]->colForm = isset($value['colForm']) ? $value['colForm'] : 6;
-        $data[$value['name']]->validate = isset($value['validate']) ? $value['validate'] : [];
-        $data[$value['name']]->validateMessage = isset($value['validateMessage']) ? $value['validateMessage'] : [];
+
+        $validate = $this->getValidateDefault($value);
+        $data[$value['name']]->validate = isset($value['validate']) ? $value['validate'] : $validate;
         
       }
     }else{
@@ -54,6 +56,46 @@ trait GenerateForm
 
     $obj = (object)$data;
     return $obj;
+  }
+
+  private function getValidateDefault($value)
+  {
+    $validate = [];
+    if(isset($value['option']['required'])){
+      $validate = array_merge($validate, ['required']);
+    }
+
+    if($value['type'] == 'text'){
+      $validate = array_merge($validate, ['string','max:255']);
+    }
+
+    if($value['type'] == 'email'){
+      $validate = array_merge($validate, ['string','email']);
+    }
+
+
+    if($value['type'] == 'file'){
+      $validate = array_merge($validate, [
+                    'mimes:jpg,bmp,png,ppt,pptx,doc,docx,pdf,xls,xlsx,m4v,avi,flv,mp4,mov',
+                    'file',
+                    'image'
+                  ]);
+    }
+
+    $validate = implode("|",$validate);
+    return $validate;
+  }
+
+  protected function validateRequest($forms, $request)
+  {
+    $validate = [];
+    $validateMessage = [];
+    foreach ($forms as $key => $value) {
+      $validate[$key] = $value->validate;
+      $validateMessage = array_merge($validateMessage, $this->validateMessage);
+    }
+
+    return $this->validate($request,$validate,$validateMessage);
   }
 
 }

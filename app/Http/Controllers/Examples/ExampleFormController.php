@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseComponent\BaseController;
 
+
 class ExampleFormController extends BaseController
 {
     protected $f_model = 'Example';
@@ -15,6 +16,47 @@ class ExampleFormController extends BaseController
     protected $customPage = [
         'form' => 'examples.example-crud.form',
     ];
+
+
+    public function _setForm($method)
+    {
+        $forms = [
+            'field2'=>[
+                'name'=> "field2",
+                'type'=> "email",
+                'label'=> "Field 2",
+                'option'=> [
+                    'class' => 'form-control',
+                    'required' => 'required',
+                    'placeholder' => 'Enter Field 2'
+                ],
+            ],
+            'field3'=>[
+                'name'=> "field3",
+                'type'=> "text",
+                'label'=> "Field 4",
+                'option'=> [
+                    'class' => 'form-control',
+                    'required' => 'required',
+                    'placeholder' => 'Enter Field 3'
+                ],
+            ],
+            'field4'=>[
+                'name'=> "field4",
+                'type'=> "text",
+                'label'=> "Field 4",
+                'option'=> [
+                    'class' => 'form-control',
+                    'required' => 'required',
+                    'placeholder' => 'Enter Field 4'
+                ],
+            ],
+        ];
+
+        return $forms;
+    }
+  
+
 
 
     // protected $customPage = [

@@ -64,8 +64,7 @@ class DCrudCommand extends Command
             $folderView = $this->option('view-path') .'.'. Str::kebab($className);
         }
 
-        
-
+    
         $controllerNamespace = ($this->option('controller-namespace'));
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
         $modelNamespace = $this->option('model-namespace');

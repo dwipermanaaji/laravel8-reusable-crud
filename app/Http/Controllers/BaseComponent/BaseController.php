@@ -79,8 +79,15 @@ class BaseController extends Controller {
 
   public function store(Request $request)
   {
-    if (method_exists($this, '_validateRequest'))
-      $validate = $this->_validateRequest($request, 'create');
+    if (method_exists($this, '_validateRequest')){
+        $validate = $this->_validateRequest($request, 'create');
+    }else{
+      if (method_exists($this, '_setForm')) {
+        $forms = $this->_setForm('create');
+        $forms = $this->setForm($forms, 'create');
+        $validate = $this->validateRequest($forms, $request);
+      }      
+    } 
   
     $requestData = $request->all();
     try {
