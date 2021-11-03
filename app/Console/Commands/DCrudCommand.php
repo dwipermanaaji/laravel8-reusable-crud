@@ -19,7 +19,7 @@ class DCrudCommand extends Command
         {--route : Include Crud route to routes.php.}
         {--example : Include exmaple code with comment}
         {--form : Include form.blade.php in folder views }
-        
+        {--auth-name= : auth_name}
     ';
 
     protected $description = 'Command description';
@@ -38,11 +38,13 @@ class DCrudCommand extends Command
         $modelName = Str::singular($name);
         $migrationName = Str::plural(Str::lower($className));
         $tableName = $migrationName;
-        $viewName = Str::lower($name);
+        $viewName = Str::replace('\\-', '\\', Str::kebab($name));;
         $routeName = Str::kebab($className);
 
         $example = $this->option('example');
         $form = $this->option('form');
+        $authName = $this->option('auth-name');
+        
 
 
         $primaryKey = $this->option('pk');
@@ -64,11 +66,10 @@ class DCrudCommand extends Command
             $folderView = $this->option('view-path') .'.'. Str::kebab($className);
         }
 
-    
+
         $controllerNamespace = ($this->option('controller-namespace'));
         $controllerNamespace = ($controllerNamespace != null) ? $controllerNamespace .'\\'. $className . 'Controller' : $name . 'Controller';
         $modelNamespace = $this->option('model-namespace');
-        
         $this->call('dcrud:controller', [
                     'name' => $controllerNamespace ,
                     '--view-path'=>$viewPath, 
@@ -77,11 +78,12 @@ class DCrudCommand extends Command
                     '--route-name'=>$routeName, 
                     '--example'=>$example, 
                     '--form'=>$form,
-                    '--folder-view'=>$folderView
+                    '--folder-view'=>$folderView,
+                    '--auth-name'=>$authName,
                 ]);
         $this->call('crud:model', ['name' => $modelName, '--fillable' => $fillable, '--table' => $tableName]);
         $this->call('dcrud:migration', ['name' => $migrationName, '--schema' => $fields, '--pk' => $primaryKey]);
-        
+       
         if($form){
             $this->call('dcrud:view', [
                 'name' => $viewName, 

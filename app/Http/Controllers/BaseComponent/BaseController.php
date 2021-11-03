@@ -39,6 +39,7 @@ class BaseController extends Controller {
   protected $segment = null;
 
 
+
   public function __construct()
   {
     $this->setModel();
@@ -51,7 +52,7 @@ class BaseController extends Controller {
 
   public function index()
   {
-    $this->checkPermissions('index', 'list');
+    $this->checkPermissions('index');
     try {
       $info = $this->info();
       return view($this->views['index'])->with(['info' => $info]);
@@ -62,7 +63,7 @@ class BaseController extends Controller {
 
   public function create()
   {
-    $this->checkPermissions('create', 'create');
+    $this->checkPermissions('create');
 
     try {
       $info = $this->info();
@@ -84,7 +85,7 @@ class BaseController extends Controller {
 
   public function store(Request $request)
   {
-    $this->checkPermissions('store', 'create');
+    $this->checkPermissions('store');
 
     if (method_exists($this, '_validateRequest')){
         $validate = $this->_validateRequest($request, 'create');
@@ -114,13 +115,13 @@ class BaseController extends Controller {
 
   public function show(Request $request, $id)
   {
-    $this->checkPermissions('show', 'read');
+    $this->checkPermissions('show');
       dd('Show Maintenance');
   }
 
   public function edit($id)
   {
-    $this->checkPermissions('edit', 'update');
+    $this->checkPermissions('edit');
     try {
       $info = $this->info();
       $obj = (method_exists($this, '_edit')) ? $this->_edit($id) : $this->model->findOrFail($id);
@@ -145,7 +146,7 @@ class BaseController extends Controller {
 
   public function update(Request $request, $id)
   {
-    $this->checkPermissions('update', 'update');
+    $this->checkPermissions('update');
 
     if (method_exists($this, '_validateRequest')){
       $validate = $this->_validateRequest($request, 'create');
@@ -175,7 +176,7 @@ class BaseController extends Controller {
 
   public function destroy(Request $request, $id)
   {
-    $this->checkPermissions('destroy', 'destroy');
+    $this->checkPermissions('destroy');
     try {
         DB::beginTransaction();
 

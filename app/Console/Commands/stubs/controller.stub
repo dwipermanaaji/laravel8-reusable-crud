@@ -11,7 +11,8 @@ class DummyClass  extends BaseController
     protected $f_model = '{{modelName}}';
     protected $title = '{{title}}';
     protected $route = '{{route-name}}';    
-
+    {{auth_name}}
+    
     {{customPage}}
 
     public $rowsdatatableColumn = [

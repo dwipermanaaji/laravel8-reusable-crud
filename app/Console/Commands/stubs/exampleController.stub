@@ -7,6 +7,20 @@
     //     'form' => null,
     // ];
 
+    // protected $auths = [
+    //   'index',
+    //   'create',
+    //   'store',
+    //   'show',
+    //   'edit',
+    //   'update',
+    //   'destroy',
+    //   'delete',
+    //   'trash',
+    //   'restore',
+    // ];
+
+
     // protected $customRoute = [
     //     'index' => null,
     //     'create' => null,

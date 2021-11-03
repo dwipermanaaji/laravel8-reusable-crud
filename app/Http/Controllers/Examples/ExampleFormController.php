@@ -17,6 +17,10 @@ class ExampleFormController extends BaseController
         'form' => 'examples.example-crud.form',
     ];
 
+    protected $auths = [
+        'all',
+    ];
+
 
     public function _setForm($method)
     {

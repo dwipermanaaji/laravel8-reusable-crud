@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Console\Services\TypeLookupService;
 use Illuminate\Console\GeneratorCommand;
+use Spatie\Permission\Models\Permission;
 use Str;
+use DB;
 
 class DCrudControllerCommand extends GeneratorCommand
 {
@@ -19,6 +21,7 @@ class DCrudControllerCommand extends GeneratorCommand
                             {--folder-view= : Folder Views.}
                             {--example}
                             {--form}
+                            {--auth-name= :auth_name}
                             ';
 
     protected $description = 'Create a new resource controller.';
@@ -46,6 +49,7 @@ class DCrudControllerCommand extends GeneratorCommand
         $example = $this->option('example');
         $form = $this->option('form');
         $folderView = $this->option('folder-view');
+        $authName = Str::kebab($this->option('auth-name'));
         
 
         $data = [];
@@ -68,7 +72,7 @@ class DCrudControllerCommand extends GeneratorCommand
             }
 
             foreach ($data as $key => $item) {
-                $form = "'".$item['name']."'=>[
+                $formField = "'".$item['name']."'=>[
                     'name'=> '".$item['name']."',
                     'type'=> '".$this->typeLookup[$item['type']]."',
                     'label'=> '".Str::headline($item['name'])."',
@@ -79,9 +83,9 @@ class DCrudControllerCommand extends GeneratorCommand
                     ],
                 ],";
                 if($key != 0){
-                    $form .= "\n\t\t\t";
+                    $formField .= "\n\t\t\t";
                 }
-                $forms .= $form;
+                $forms .= $formField;
             }
             
         }
@@ -106,6 +110,20 @@ class DCrudControllerCommand extends GeneratorCommand
     }
 
 
+    $replaceAuthName = '';
+    if($authName != null){
+        Permission::firstOrCreate(['name' => $authName.'.list']);
+        Permission::firstOrCreate(['name' => $authName.'.create']);
+        Permission::firstOrCreate(['name' => $authName.'.read']);
+        Permission::firstOrCreate(['name' => $authName.'.update']);
+        Permission::firstOrCreate(['name' => $authName.'.destroy']);
+
+        $this->info("Permission '".$authName."' created");
+
+        $replaceAuthName = "protected \$auth_name = '".$authName."';";   
+    }
+
+
         return $this->replaceNamespace($stub, $name)
             ->replaceModelName($stub, $modelName)
             ->replaceModelTitle($stub, Str::headline(class_basename($modelName)))
@@ -114,6 +132,7 @@ class DCrudControllerCommand extends GeneratorCommand
             ->replaceForms($stub, $forms)
             ->replaceCustomPage($stub, $customPage)
             ->replaceExample($stub, $example)
+            ->replaceAuthName($stub, $replaceAuthName)
             ->replaceClass($stub, $name);
     }
 
@@ -178,4 +197,11 @@ class DCrudControllerCommand extends GeneratorCommand
         );
         return $this;   
     }
+    protected function replaceAuthName(&$stub, $replaceAuthName = '')
+    {
+        $stub = str_replace(
+            '{{auth_name}}', $replaceAuthName, $stub
+        );
+        return $this;   
+    }    
 }
