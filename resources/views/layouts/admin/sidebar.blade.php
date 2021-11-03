@@ -33,7 +33,7 @@
 
                 <li class="nav-header">Server</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link ">
                         <i class="nav-icon fa fa-cogs"></i>
                         <p>
                             Pengaturan
@@ -47,6 +47,36 @@
                                 <p>User</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-cogs"></i>
+                                <p>
+                                    Permissions
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('pengaturan.module-permission.index')}}" class="nav-link">
+                                        {{-- <i class="fa fa-users-cog users nav-icon"></i> --}}
+                                        <p>Module Permission</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('pengaturan.sub-module-permission.index')}}" class="nav-link">
+                                        {{-- <i class="fa fa-users-cog users nav-icon"></i> --}}
+                                        <p>Sub Module Permission</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('pengaturan.permission.index')}}" class="nav-link ">
+                                        {{-- <i class="fa fa-users-cog users nav-icon"></i> --}}
+                                        <p>Permission</p>
+                                    </a>
+                                </li>                                
+                            </ul>
+                        </li>
+
                         <li class="nav-item">
                             <a href="{{route('pengaturan.role.index')}}" class="nav-link">
                                 <i class="fa fa-users-cog users nav-icon"></i>

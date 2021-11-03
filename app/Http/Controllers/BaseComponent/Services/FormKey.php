@@ -12,7 +12,7 @@ class FormKey
     public $label = null;
     public $value = null;
     public $option = null;
-    public $list = null;
+    public $list = [];
     public $selected = null;
     public $checked = null;
     public $create = true;

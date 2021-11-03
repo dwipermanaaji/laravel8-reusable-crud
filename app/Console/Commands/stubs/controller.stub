@@ -15,7 +15,7 @@ class DummyClass  extends BaseController
     
     {{customPage}}
 
-    public $rowsdatatableColumn = [
+    public $datatableColumn = [
       {{rowsdatatableColumn}}['data' => 'action', 'title' => 'Opsi', 'orderable' => false, 'searchable' => false, 'width' => '130px'],
     ];
 

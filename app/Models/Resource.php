@@ -12,7 +12,7 @@ class Resource extends Model
 
     public function getStructure() {
         $columnModel = (array)Schema::getColumnListing($this->getTable());
-        $withoutColumnModel = ['id',$this->getKeyName(),'created_at','updated_at'];
+        $withoutColumnModel = ['id',$this->getKeyName(),'deleted_at','created_at','updated_at'];
         $fillable = array_diff( $columnModel, $withoutColumnModel);
         return $fillable;
     }

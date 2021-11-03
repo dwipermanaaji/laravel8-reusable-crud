@@ -11,6 +11,9 @@ trait GenerateDataTable
   
   protected function initialSetDataTableColumn()
   {
+    if($this->datatableColumn != [])
+      return;
+
     foreach($this->structures as $value){
       $column = [
           'data' => $value, 
@@ -32,6 +35,12 @@ trait GenerateDataTable
     if (method_exists($this, '_dataTableWith')) {
         $model = $this->_dataTableWith($model);
     }
+
+    if (!request()->get('order')) {
+      $model = $model->orderBy('updated_at', 'desc');
+    }
+    
+
     $model = $model->newQuery();
     $dataTables =  DataTables::eloquent($model);
     $dataTables->addColumn('action', function ($data) use ($primaryKey, $request) {

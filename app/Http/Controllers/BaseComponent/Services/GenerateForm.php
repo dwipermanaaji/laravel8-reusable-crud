@@ -38,12 +38,14 @@ trait GenerateForm
         $data[$value['name']]->label = isset($value['label']) ? $value['label'] : Str::headline($value['name']);
         $data[$value['name']]->value = isset($value['value']) ? $value['value'] : null;
         $data[$value['name']]->option = isset($value['option']) ? $value['option'] : null;
-        $data[$value['name']]->list = isset($value['list']) ? $value['list'] : null;
+        $data[$value['name']]->list = isset($value['list']) ? $value['list'] : [];
         $data[$value['name']]->selected = isset($value['selected']) ? $value['selected'] : null;
         $data[$value['name']]->checked = isset($value['checked']) ? $value['checked'] : null;
         $data[$value['name']]->create = isset($value['create']) ? $value['create'] : true;
         $data[$value['name']]->edit = isset($value['edit']) ? $value['edit'] : true;
         $data[$value['name']]->route = isset($value['route']) ? $value['route'] : true;
+        $data[$value['name']]->colForm = isset($value['colForm']) ? $value['colForm'] : 6;
+        
         $data[$value['name']]->formType = $method;
 
         $validate = $this->getValidateDefault($value);

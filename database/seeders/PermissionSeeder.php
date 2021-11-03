@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\RolePermission\ModulePermission;
+use App\Models\RolePermission\SubModulePermission;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
@@ -14,11 +16,17 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'all']);
-        Permission::create(['name' => 'examples.list']);
-        Permission::create(['name' => 'examples.create']);
-        Permission::create(['name' => 'examples.read']);
-        Permission::create(['name' => 'examples.update']);
-        Permission::create(['name' => 'examples.destroy']);        
+        $module1 = ModulePermission::create(['module_name'=>'superadmin']);
+        $subModule1 = SubModulePermission::create(['sub_module_name'=>'superadmin','module_permission_id'=>$module1->id]);
+        Permission::create(['name' => 'all','sub_module_permission_id'=>$subModule1->id]);
+        
+        $module2 = ModulePermission::create(['module_name'=>'Example']);
+        $subModule2 = SubModulePermission::create(['sub_module_name'=>'Example Crud','module_permission_id'=>$module2->id]);
+        
+        Permission::create(['name' => 'examples.list','sub_module_permission_id'=>$subModule2->id]);
+        Permission::create(['name' => 'examples.create','sub_module_permission_id'=>$subModule2->id]);
+        Permission::create(['name' => 'examples.read','sub_module_permission_id'=>$subModule2->id]);
+        Permission::create(['name' => 'examples.update','sub_module_permission_id'=>$subModule2->id]);
+        Permission::create(['name' => 'examples.destroy','sub_module_permission_id'=>$subModule2->id]);        
     }
 }

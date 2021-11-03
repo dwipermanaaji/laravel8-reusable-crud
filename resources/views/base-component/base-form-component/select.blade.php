@@ -10,10 +10,9 @@
   $option = (!isset($option['class'])) ? array_merge($option, ['class'=>'']) : $forms->option;
   $option['class'] = $option['class'].$invalid;
   $value = (isset($obj[$forms->name])) ? $obj[$forms->name]: $forms->value;
-  $value = ($forms->value != null) ? $forms->value : $value;
+  $value = ($forms->selected != null) ? $forms->selected : $value;
 @endphp
-
-{!! Form::select($forms->name,  $forms->list, $forms->selected, $option) !!}
+{!! Form::select($forms->name, $forms->list, $value, $option) !!}
 @error($forms->name)
     <span class="error invalid-feedback">
         {{ $message }}

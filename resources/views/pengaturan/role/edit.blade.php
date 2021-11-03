@@ -59,17 +59,39 @@
                                     <div class="form-group col-12">
                                         <label>Premission</label>
                                         <div class="row ml-2 mr-2 mt-0">
-                                          @foreach ( $permissions as $i => $permission )
-                                            <div class="form-check col-3">
-                                                {!! Form::checkbox( 'permissions[]', 
-                                                                    $permission->id,
-                                                                    $data->permissions->count() > 0 ? in_array($permission->id, $data->permissions->pluck('id')->toarray()) : false,
-                                                                    ['class' => 'form-check-input', 'id' => 'permission'.$permission->id] 
-                                                                    ) !!}
-                                                {!! Form::label('permission'.$permission->id,  $permission->name,['class'=>'form-check-label']) !!}
-                                            </div>
-                                          @endforeach
-                                        </div>
+                                            @foreach ($modulePermissions as $modulePermission)
+                                                <div class="col-12 card direct-chat-primary">
+                                                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                                    <h3 class="card-title">{{$modulePermission->module_name}}</h3>
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    </div>
+                                                    <!-- /.card-header -->
+                                                    <div class="card-body " style="display: block">
+                                                        <div class="row">
+                                                            @foreach ($modulePermission->sub_module_permissions as $sub_module_permission)                                                        
+                                                                <div class="col-6" >
+                                                                    <b>{{$sub_module_permission->sub_module_name}}</b>
+                                                                    @foreach ( $sub_module_permission->permissions as $i => $permission )
+                                                                    <div class="form-check col-12 ml-2">
+                                                                        {!! Form::checkbox( 'permissions[]', 
+                                                                        $permission->id,
+                                                                        $data->permissions->count() > 0 ? in_array($permission->id, $data->permissions->pluck('id')->toarray()) : false,
+                                                                        ['class' => 'form-check-input', 'id' => 'permission'.$permission->id] 
+                                                                        ) !!}
+                                                                        {!! Form::label('permission'.$permission->id,  $permission->name,['class'=>'form-check-label']) !!}
+                                                                    </div>
+                                                                    @endforeach                                                          
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                          </div>                                        
                                     </div>  
                                   </div>
                                 </div>

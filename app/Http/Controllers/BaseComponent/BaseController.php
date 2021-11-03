@@ -86,7 +86,6 @@ class BaseController extends Controller {
   public function store(Request $request)
   {
     $this->checkPermissions('store');
-
     if (method_exists($this, '_validateRequest')){
         $validate = $this->_validateRequest($request, 'create');
     }else{

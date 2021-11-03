@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pengaturan;
 
 use App\Http\Controllers\Controller;
+use App\Models\RolePermission\ModulePermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -20,8 +21,8 @@ class RoleController extends Controller
 
     public function create()
     {
-        $permissions = Permission::get();
-        return view('pengaturan.role.create',compact('permissions'));
+        $modulePermissions = ModulePermission::with(['sub_module_permissions','sub_module_permissions.permissions'])->get();
+        return view('pengaturan.role.create',compact('modulePermissions'));
     }
 
 
@@ -62,8 +63,8 @@ class RoleController extends Controller
             toastr()->error('Data Tidak Ada', 'Gagal!');
             return redirect()->back()->withInput(request()->input());
         }
-        $permissions = Permission::get();
-        return view('pengaturan.role.edit',compact('data','permissions'));
+        $modulePermissions = ModulePermission::with(['sub_module_permissions','sub_module_permissions.permissions'])->get();
+        return view('pengaturan.role.edit',compact('data','modulePermissions'));
     }
 
     public function update(Request $request, $id)

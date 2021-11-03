@@ -24,6 +24,7 @@
       $('#dataTable').DataTable({
           processing: true,
           serverSide: true,
+          order: [], 
           ajax: {
               "url": parsedUrl,
               "dataType": "json",

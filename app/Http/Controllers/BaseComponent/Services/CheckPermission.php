@@ -35,7 +35,6 @@ trait CheckPermission
       $permissionRoute = $this->getPremission($method);
       $permissions = ['all',$permissionRoute];
       $user = Auth::user();
-      dd($permissions);
       if(!$user->hasAnyPermission($permissions)) {
           abort(403);
       }
