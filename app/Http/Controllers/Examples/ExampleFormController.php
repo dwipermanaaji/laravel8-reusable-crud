@@ -23,7 +23,7 @@ class ExampleFormController extends BaseController
         $forms = [
             'field2'=>[
                 'name'=> "field2",
-                'type'=> "email",
+                'type'=> "text",
                 'label'=> "Field 2",
                 'option'=> [
                     'class' => 'form-control',

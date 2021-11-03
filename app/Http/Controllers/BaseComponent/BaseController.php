@@ -9,12 +9,12 @@ use App\Http\Controllers\BaseComponent\Services\GenerateModel;
 use App\Http\Controllers\BaseComponent\Services\GenerateRoute;
 use App\Http\Controllers\BaseComponent\Services\GenerateView;
 use App\Http\Controllers\BaseComponent\Services\HandleError;
+use App\Http\Controllers\BaseComponent\Services\CheckPermission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Resource;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Crypt;
 
 class BaseController extends Controller {
@@ -24,7 +24,8 @@ class BaseController extends Controller {
   GenerateForm,
   GenerateDataTable,
   HandleError,
-  GenerateInfo;
+  GenerateInfo,
+  CheckPermission;
   
   protected $devMode = true;
 
@@ -46,8 +47,11 @@ class BaseController extends Controller {
     $this->initialSetDataTableColumn();
   }
 
+
+
   public function index()
   {
+    $this->checkPermissions('index', 'list');
     try {
       $info = $this->info();
       return view($this->views['index'])->with(['info' => $info]);
@@ -58,6 +62,7 @@ class BaseController extends Controller {
 
   public function create()
   {
+    $this->checkPermissions('create', 'create');
 
     try {
       $info = $this->info();
@@ -79,6 +84,8 @@ class BaseController extends Controller {
 
   public function store(Request $request)
   {
+    $this->checkPermissions('store', 'create');
+
     if (method_exists($this, '_validateRequest')){
         $validate = $this->_validateRequest($request, 'create');
     }else{
@@ -107,12 +114,13 @@ class BaseController extends Controller {
 
   public function show(Request $request, $id)
   {
+    $this->checkPermissions('show', 'read');
       dd('Show Maintenance');
   }
 
   public function edit($id)
   {
-    
+    $this->checkPermissions('edit', 'update');
     try {
       $info = $this->info();
       $obj = (method_exists($this, '_edit')) ? $this->_edit($id) : $this->model->findOrFail($id);
@@ -137,6 +145,8 @@ class BaseController extends Controller {
 
   public function update(Request $request, $id)
   {
+    $this->checkPermissions('update', 'update');
+
     if (method_exists($this, '_validateRequest')){
       $validate = $this->_validateRequest($request, 'create');
     }
@@ -165,6 +175,7 @@ class BaseController extends Controller {
 
   public function destroy(Request $request, $id)
   {
+    $this->checkPermissions('destroy', 'destroy');
     try {
         DB::beginTransaction();
 
