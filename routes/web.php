@@ -38,19 +38,25 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::resource('/user', UserController::class,['as'=>'pengaturan']);
         Route::resource('/role', RoleController::class,['as'=>'pengaturan']);
 
+        Route::get('module-permission/datatable',[ModulePermissionController::class,'dataTable'])->name('pengaturan.module-permission.datatable');
+        Route::get('module-permission/trash', [ModulePermissionController::class, 'trash'])->name('pengaturan.module-permission.trash');
+        Route::post('module-permission/{id}/restore', [ModulePermissionController::class, 'restore'])->name('pengaturan.module-permission.restore');
+        Route::delete('module-permission/{id}/delete', [ModulePermissionController::class, 'delete'])->name('pengaturan.module-permission.delete');
         Route::resource('module-permission', ModulePermissionController::class, ['as'=>'pengaturan']);
-        Route::get('datatable/module-permission',[ModulePermissionController::class,'dataTable'])->name('pengaturan.module-permission.datatable');
-    
+
+        Route::get('sub-module-permission/datatable',[SubModulePermissionController::class,'dataTable'])->name('pengaturan.sub-module-permission.datatable');
+        Route::get('sub-module-permission/trash', [SubModulePermissionController::class, 'trash'])->name('pengaturan.sub-module-permission.trash');
+        Route::post('sub-module-permission/{id}/restore', [SubModulePermissionController::class, 'restore'])->name('pengaturan.sub-module-permission.restore');
+        Route::delete('sub-module-permission/{id}/delete', [SubModulePermissionController::class, 'delete'])->name('pengaturan.sub-module-permission.delete');
         Route::resource('sub-module-permission', SubModulePermissionController::class,['as'=>'pengaturan']);
-        Route::get('datatable/sub-module-permission',[SubModulePermissionController::class,'dataTable'])->name('pengaturan.sub-module-permission.datatable');
         
+        Route::get('permission/datatable',[PermissionController::class,'dataTable'])->name('pengaturan.permission.datatable');
         Route::resource('permission', PermissionController::class,['as'=>'pengaturan']);
-        Route::get('datatable/permission',[PermissionController::class,'dataTable'])->name('pengaturan.permission.datatable');
     
     });
 
     Route::resource('examples-crud', ExampleFormController::class);
-    Route::get('datatable/examples-crud',[ExampleFormController::class,'dataTable'])->name('examples-crud.datatable');
+    Route::get('examples-crud/datatable',[ExampleFormController::class,'dataTable'])->name('examples-crud.datatable');
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {

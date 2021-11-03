@@ -32,6 +32,11 @@ trait GenerateDataTable
   {
     $primaryKey = $this->model->getKeyName();
     $model = $this->model;
+    if($request['trash']){
+      $model = $model->onlyTrashed();
+    }
+
+
     if (method_exists($this, '_dataTableWith')) {
         $model = $this->_dataTableWith($model);
     }
@@ -39,7 +44,6 @@ trait GenerateDataTable
     if (!request()->get('order')) {
       $model = $model->orderBy('updated_at', 'desc');
     }
-    
 
     $model = $model->newQuery();
     $dataTables =  DataTables::eloquent($model);
@@ -48,7 +52,7 @@ trait GenerateDataTable
         <a href='".route($this->routes['edit'],$data->id)."' class='btn btn-light-warning btn-sm btn-icon' title='Edit $this->title'>
             <i class='fas fa-pencil-alt'></i>
         </a>
-        <button type='button' onclick='return deletePengaduan($data->id)' class='btn btn-light-danger btn-sm btn-icon' title='Hapus $this->title'>
+        <button type='button' onclick='return deleteData($data->id)' class='btn btn-light-danger btn-sm btn-icon' title='Hapus $this->title'>
             <i class='fas fa-trash-alt'></i>
         </button>
         <form id='form-delete-$data->id' action='".route($this->routes['destroy'],$data->id)."' method='POST' style='display: none;'>
@@ -56,6 +60,24 @@ trait GenerateDataTable
             ". method_field('DELETE') . "
         </form> 
       ";
+
+      if($request['trash']){
+        $btn = "
+          <button type='button' onclick='return restore($data->id)' class='btn btn-light-danger btn-sm btn-icon' title='Restore $this->title'>
+              <i class='fas fa-undo'></i>
+          </button>
+          <form id='form-restore-$data->id' action='".route($this->routes['restore'],$data->id)."' method='POST' style='display: none;'>
+              ".csrf_field()."
+          </form>         
+          <button type='button' onclick='return deletePermanent($data->id)' class='btn btn-light-danger btn-sm btn-icon' title='Hapus $this->title'>
+              <i class='fas fa-trash-alt'></i>
+          </button>
+          <form id='form-delete-$data->id' action='".route($this->routes['delete'],$data->id)."' method='POST' style='display: none;'>
+              ".csrf_field()."
+              ". method_field('DELETE') . "
+          </form> 
+        ";        
+      }
       return $btn;
     });
 

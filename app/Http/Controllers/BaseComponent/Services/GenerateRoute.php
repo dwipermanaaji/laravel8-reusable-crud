@@ -14,7 +14,11 @@ trait GenerateRoute
     'edit' => null,
     'update' => null,
     'destroy' => null,
+    'delete' => null,
     'dataTable' => null,
+    'trash' => null,
+    'restore' => null,
+    
   ];
 
   protected function setRoute()
@@ -29,7 +33,12 @@ trait GenerateRoute
       $this->routes['edit'] = $this->generateRoute('edit');
       $this->routes['update'] = $this->generateRoute('update');
       $this->routes['destroy'] = $this->generateRoute('destroy');
+      $this->routes['delete'] = $this->generateRoute('delete');
       $this->routes['dataTable'] = $this->generateRoute('datatable');
+      $this->routes['trash'] = $this->generateRoute('trash');
+      $this->routes['restore'] = $this->generateRoute('restore');
+      
+      
   }
 
   protected function generateRoute($method)

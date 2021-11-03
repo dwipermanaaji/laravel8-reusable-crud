@@ -58,9 +58,6 @@ class SubModulePermissionController  extends BaseController
         return $forms;
     }
   
-    public function destroy(Request $request, $id)
-    {
-        dd('belum');
-    }
+
     
 }

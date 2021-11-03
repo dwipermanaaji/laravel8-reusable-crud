@@ -58,7 +58,7 @@ class BaseController extends Controller {
       return view($this->views['index'])->with(['info' => $info]);
     } catch (\Exception $e) {
         $this->_handleDBTransactionError($e);
-    }    
+    }
   }
 
   public function create()
@@ -183,7 +183,7 @@ class BaseController extends Controller {
             $obj = $this->_destroy($id);
         } else {
             $obj = $this->model->findOrFail($id);
-            $obj->destroy($id);
+            $obj->delete();
         }
         DB::commit();
 
@@ -193,9 +193,56 @@ class BaseController extends Controller {
         $this->_handleDBTransactionError($e);
     }
   }
+  public function trash()
+  {
+    $this->checkPermissions('trash');
+    try {
+      $info = $this->info();
+      return view($this->views['trash'])->with(['info' => $info]);
+    } catch (\Exception $e) {
+        $this->_handleDBTransactionError($e);
+    }
+  }
 
+  public function restore($id)
+  {
+    $this->checkPermissions('restore');
+    try {
+        DB::beginTransaction();
 
+        if (method_exists($this, '_restore')) {
+            $obj = $this->_restore($id);
+        } else {
+            $obj = $this->model->withTrashed()->findOrFail($id);
+            $obj->restore();
+        }
+        DB::commit();
 
+        toastr()->success('Data Berhasil dikembalikan', 'Berhasil!');
+        return redirect(route($this->routes['index']));
+    } catch (\Exception $e) {
+        $this->_handleDBTransactionError($e);
+    }
+  }
 
+  public function delete($id)
+  {
+    $this->checkPermissions('delete');
+    try {
+        DB::beginTransaction();
 
+        if (method_exists($this, '_delete')) {
+            $obj = $this->_delete($id);
+        } else {
+            $obj = $this->model->withTrashed()->findOrFail($id);
+            $obj->forceDelete();
+        }
+        DB::commit();
+
+        toastr()->success('Data Berhasil dihapus Permanen', 'Berhasil!');
+        return redirect(route($this->routes['trash']));
+    } catch (\Exception $e) {
+        $this->_handleDBTransactionError($e);
+    }
+  }
 }

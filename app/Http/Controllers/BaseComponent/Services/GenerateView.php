@@ -11,6 +11,7 @@ trait GenerateView
     'create' => null,
     'edit' => null,
     'form' => null,
+    'trash'=>null,
   ];
 
 
@@ -22,6 +23,7 @@ trait GenerateView
     $this->views['create'] = $this->generateView('create');
     $this->views['edit'] = $this->generateView('edit');
     $this->views['form'] = $this->generateView('form');
+    $this->views['trash'] = $this->generateView('trash');
     
   }
 

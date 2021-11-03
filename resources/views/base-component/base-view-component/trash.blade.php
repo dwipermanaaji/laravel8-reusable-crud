@@ -7,12 +7,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{$info->title}}</h1>
+                        <h1 class="m-0">Trash {{$info->title}}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">{{$info->title}}</li>
+                            <li class="breadcrumb-item"><a href="{{route($info->routes['index'])}}">{{$info->title}}</a></li>
+                            <li class="breadcrumb-item active">Trash</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -27,9 +28,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header d-flex ">
-                                <h3 class="card-title d-flex align-items-center">Table Data {{$info->title}}</h3>
-                                <a href="{{ route($info->routes['trash']) }}" class="btn btn-default ml-auto"><i class="fas fa-trash"></i></a>
-                                <a href="{{ route($info->routes['create']) }}" class="btn btn-primary ml-1">Tambah Data</a>
+                                <h3 class="card-title d-flex align-items-center">Table Data Trash {{$info->title}}</h3>
+                                <a href="{{ route($info->routes['index']) }}" class="btn btn-default ml-auto">Back</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
