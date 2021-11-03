@@ -13,13 +13,14 @@ class ExampleFormController extends BaseController
     protected $title = 'Examples';
     protected $route = 'examples-crud';    
 
-    protected $customPage = [
+    protected array $customPage = [
         'form' => 'examples.example-crud.form',
     ];
 
-    protected $auths = [
+    protected array $auths = [
         'all',
     ];
+
 
 
     public function _setForm($method)

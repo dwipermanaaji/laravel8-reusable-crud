@@ -55,8 +55,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     
     });
 
-    Route::resource('examples-crud', ExampleFormController::class);
     Route::get('examples-crud/datatable',[ExampleFormController::class,'dataTable'])->name('examples-crud.datatable');
+    Route::get('examples-crud/trash', [ExampleFormController::class, 'trash'])->name('examples-crud.trash');
+    Route::post('examples-crud/{id}/restore', [ExampleFormController::class, 'restore'])->name('examples-crud.restore');
+    Route::delete('examples-crud/{id}/delete', [ExampleFormController::class, 'delete'])->name('examples-crud.delete');
+    Route::resource('examples-crud', ExampleFormController::class);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {

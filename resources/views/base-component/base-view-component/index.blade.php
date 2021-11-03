@@ -28,8 +28,10 @@
                         <div class="card">
                             <div class="card-header d-flex ">
                                 <h3 class="card-title d-flex align-items-center">Table Data {{$info->title}}</h3>
-                                <a href="{{ route($info->routes['trash']) }}" class="btn btn-default ml-auto"><i class="fas fa-trash"></i></a>
-                                <a href="{{ route($info->routes['create']) }}" class="btn btn-primary ml-1">Tambah Data</a>
+                                @if ($info->softDelete)
+                                    <a href="{{ route($info->routes['trash']) }}" class="btn btn-default ml-auto"><i class="fas fa-trash"></i></a>
+                                @endif
+                                <a href="{{ route($info->routes['create']) }}" class="btn btn-primary ml-1 {{!$info->softDelete ? 'ml-auto' : ''}}">Tambah Data</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

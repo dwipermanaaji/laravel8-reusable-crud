@@ -11,6 +11,7 @@ trait GenerateInfo
     $info['routes'] = $this->routes;
     $info['datatableColumn'] = $this->datatableColumn;
     $info['views'] = $this->views;
+    $info['softDelete'] = $this->softDelete;
     
     return (object)$info;
   }

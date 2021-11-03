@@ -27,7 +27,7 @@ class BaseController extends Controller {
   GenerateInfo,
   CheckPermission;
   
-  protected $devMode = true;
+  protected bool $devMode = true;
 
   //Penamaan di view
   protected $title = null;
@@ -38,6 +38,7 @@ class BaseController extends Controller {
   protected $segments = [];
   protected $segment = null;
 
+  public bool $softDelete = false;
 
 
   public function __construct()
@@ -195,6 +196,9 @@ class BaseController extends Controller {
   }
   public function trash()
   {
+    if(!$this->softDelete)
+      abort(404);
+
     $this->checkPermissions('trash');
     try {
       $info = $this->info();
@@ -206,6 +210,9 @@ class BaseController extends Controller {
 
   public function restore($id)
   {
+    if(!$this->softDelete)
+      abort(404);
+
     $this->checkPermissions('restore');
     try {
         DB::beginTransaction();
@@ -227,6 +234,9 @@ class BaseController extends Controller {
 
   public function delete($id)
   {
+    if(!$this->softDelete)
+      abort(404);
+
     $this->checkPermissions('delete');
     try {
         DB::beginTransaction();

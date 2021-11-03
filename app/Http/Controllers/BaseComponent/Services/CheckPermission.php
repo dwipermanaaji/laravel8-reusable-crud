@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait CheckPermission
 {
-  protected $auths = [
+  protected array $auths = [
     // 'all',
     // 'index',
     // 'create',

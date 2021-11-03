@@ -5,7 +5,7 @@ trait GenerateView
 {
   public $views = []; 
 
-  protected $customPage = [
+  protected array $customPage = [
     'index' => null,
     'show' => null,
     'create' => null,

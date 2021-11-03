@@ -13,8 +13,6 @@ class ModulePermissionController  extends BaseController
     protected $title = 'Module Permission';
     protected $route = 'pengaturan.module-permission';    
     
-    
-    
 
     public $datatableColumn = [
         ['data' => 'module_name', 'title' => 'Module Name', 'orderable' => true, 'searchable' => true],
