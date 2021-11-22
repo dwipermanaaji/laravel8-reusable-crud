@@ -169,5 +169,5 @@ Catatan Opsi:
 - --searchable : untuk mengaktifkan atau tidak searching di setiap field.
 - --width : membuat ukuran setiap field
 
-## public function __setForm($method)
+## `public function _setForm($method)`
 idth : membuat ukuran setiap field
