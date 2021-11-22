@@ -65,5 +65,8 @@ Catatan Opsi:
 - --auth-name : membuat permission nama.list,create,read,update,destroy.
 - --example : nanti akan menampilkan contoh di setiap file dengan komentar
 
+selesai
 
+
+### Generate Crud Dengan Perintah **tanpa** PHP ARTISAN
 
