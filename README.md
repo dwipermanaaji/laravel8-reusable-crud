@@ -213,4 +213,5 @@ Catatan Opsi:
     `'colForm' => 6`
 -  `validate` untuk membuat validasi untuk setiap form inputnya menggunakan laravel validate
     `'validate' => 'required|email'` 
-    *jika ada required di option maka validate akan auto required
+ 
+ *jika ada required di option maka validate akan auto required
