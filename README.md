@@ -203,20 +203,13 @@ Function ini untuk mengcustom tampilan form di **create** atau **edit**, contoh 
 *ketika tidak di isi form akan tampil dari field table dari $f_model yang diisi, kecuali id, created_at, updated_at, deleted_at
 
 Catatan Opsi:
-- name
-    `name` harus sesuai dengan field di database
-- type
-    `type` untuk menentukan jenis data di form seperti **text**, **number**, **email**, **password**
-- label
-    `label` untuk meampilan title di form label *default akan sesuai dengan **name**
-- option
-    `option` untuk menambahkan **class**, **required**, **placeholder,** **id**, di <input ...>
-- list
-    `list` untuk menampilkan list ketika type formnya select
+- `name` harus sesuai dengan field di database
+- `type` untuk menentukan jenis data di form seperti **text**, **number**, **email**, **password**
+-  `label` untuk meampilan title di form label *default akan sesuai dengan **name**
+-  `option` untuk menambahkan **class**, **required**, **placeholder,** **id**, di <input ...>
+-  `list` untuk menampilkan list ketika type formnya select
     `'list' => alamat::get()->pluck('name',id)->toArray()`
-- colForm
-    `colForm` untuk menentukan grid setiap form input
+-  `colForm` untuk menentukan grid setiap form input
     `'colForm' => 6`
-- validate
-    `validate` untuk membuat validasi untuk setiap form inputnya menggunakan laravel validate
+-  `validate` untuk membuat validasi untuk setiap form inputnya menggunakan laravel validate
     `'validate' => 'required|email'`
