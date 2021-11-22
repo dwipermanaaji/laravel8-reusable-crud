@@ -47,13 +47,13 @@ $ php artisan migrate
 ```
 
 buka file `web.php` di folder route, lalu buat route sepereti:
-`
+```
 Route::get('siswa/datatable',[SiswaController::class,'dataTable'])->name('siswa.datatable');
 Route::get('siswa/trash', [SiswaController::class, 'trash'])->name('siswa.trash');
 Route::post('siswa/{id}/restore', [SiswaController::class, 'restore'])->name('siswa.restore');
 Route::delete('siswa/{id}/delete', [SiswaController::class, 'delete'])->name('siswa.delete');
 Route::resource('siswa', SiswaController::class);
-`
+```
 jangan lupa untuk memangil SiswaController `use App\Http\Controllers\SiswaController;`
 
 
