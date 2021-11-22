@@ -6,21 +6,31 @@ deskripsi
     
 ## New project
 ```bash
-$ git clone git@gitlab.com:sagara-xinix/framework/sagara-laravel.git
+$ git clone https://github.com/dwipermanaaji/laravel8-reusable-crud.git
 ```
 
-Catatan: Jangan lupa hapus git
+Catatan: Jangan lupa hapus folder .git 
 ```bash
 laravel-project
 $ rm -rf .git
 ```
 
 ### Config Project
-```$ cp .env.example .env```
+```bash 
+    $ cd laravel8-reusable-crud/
+    $ cp .env.example .env
+```
 lalu sesuaikan `.env` dengan sistem php yang digunakan
 
 ```bash
 $ composer install
 $ php artisan key:generate
 $ php artisan migrate --seed
+$ php artisan serve
+```
+
+Catatan: Email & Password root
+```bash
+email: admin@admin.com
+password: admin
 ```
