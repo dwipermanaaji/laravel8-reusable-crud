@@ -57,6 +57,13 @@ Kamu juga bisa dengan mudah memasukan route, mengcustom form di view, custom nam
 ```bash
 $ php artisan dcrud:generate Siswa --fields="nip:text, nama" --route --form --view-path=master --auth-name=siswaSmk
 ```
-perintah akan mengenerate `Pembyatan permission **siswa-smk**, Controller, Model, Migration, view form, dan menambahkan route` 
+perintah akan mengenerate `Pembyatan permission 'siswa-smk', Controller, Model, Migration, view form, dan menambahkan route` 
+Catatan Opsi:
+- --fields : menambahkan field di form, model, dan migrasi.
+- --route : mengenerate route di web.php di folder route.
+- --view-path : mengcustom folder view.
+- --auth-name : membuat permission nama.list,create,read,update,destroy.
+- --example : nanti akan menampilkan contoh di setiap file dengan komentar
+
 
 
