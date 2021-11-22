@@ -97,13 +97,13 @@ Contoh tipe data fieldsuntuk migration dan form.balde.php:
 
 
 ### Generate Crud Dengan Perintah Manual
-Pastikan sudah membuat migrasi, atau bisa dengan perintah laravel seperti
+Pastikan sudah membuat table didatabe, atau bisa membuat migrasi dengan perintah laravel seperti:
 ```bash
 $ php artisan make:migration siswa
 ```
 
 lalu membuat file **Siswa.php** di folder Models, sperti contoh berikut
-```
+```bash
     <?php
 
     namespace App\Models;
@@ -124,13 +124,12 @@ lalu membuat file **Siswa.php** di folder Models, sperti contoh berikut
  - fillable harus di isi
 
 lalu buat file **SiswaController.php** di folder controllers, seperti contoh berikut:
-```
+```bash
     <?php
 
     namespace App\Http\Controllers;
 
     use App\Http\Requests;
-    use App\Http\Controllers\Controller;
     use App\Http\Controllers\BaseComponent\BaseController;
 
     class SiswaController extends BaseController
@@ -144,5 +143,31 @@ lalu buat file **SiswaController.php** di folder controllers, seperti contoh ber
 *catatan:
  - extends Controller diganti dengan BaseController
  - varibale **$f_model**, **$tile**, **$route** wajib di isi
+ 
+ **selesai**
+ 
+ 
+ 
+## Contoh Custome Controller
+Kamu bisa mengcustom resubale crud seperti mengganti form, mengannti field di table dll.
 
+### public $datatableColumn = []
+varibale `$datatableColumn` berfungsi untuk mengcustom munculnya field di table index, contoh nya seperti berikut:
+```bash
+    public $datatableColumn = [
+      		['data' => 'nip', 'title' => 'Nip', 'orderable' => true, 'searchable' => true],
+			['data' => 'nama', 'title' => 'Nama', 'orderable' => true, 'searchable' => true],
+			['data' => 'action', 'title' => 'Opsi', 'orderable' => false, 'searchable' => false, 'width' => '130px'],
+    ];
+```
+*aplikasi ini menggunakan datatable untuk tablenya
 
+Catatan Opsi:
+- --data : nama field di database.
+- --title : untuk menganti Nama header table, *jika dikosongkan akan mengabil nama dari data.
+- --orderable : untuk mengaktifkan atau tidak ordering di setiap field.
+- --searchable : untuk mengaktifkan atau tidak searching di setiap field.
+- --width : membuat ukuran setiap field
+
+## public function __setForm($method)
+idth : membuat ukuran setiap field
