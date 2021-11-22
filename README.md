@@ -29,8 +29,23 @@ $ php artisan migrate --seed
 $ php artisan serve
 ```
 
-Catatan: Email & Password root
-```bash
+*Catatan: Email & Password root
+```
 email: admin@admin.com
 password: admin
 ```
+
+### Generate Crud Dengan Perintah PHP ARTISAN
+```bash
+$ php artisan dcrud:generate Siswa --fields="nip:text, nama"
+```
+perintah akan mengenerate `Controller,Model,Migration` 
+
+lalu sesuaikan file migrasi apa sudah benar atau belum, lalu:
+```bash
+$ php artisan migrate
+```
+
+
+
+
