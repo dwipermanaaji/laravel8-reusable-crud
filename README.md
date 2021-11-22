@@ -161,13 +161,62 @@ varibale `$datatableColumn` berfungsi untuk mengcustom munculnya field di table 
     ];
 ```
 *aplikasi ini menggunakan datatable untuk tablenya
+*ketika tidak di isi field datatable akan diambil dari field table dari $f_model yang diisi, kecuali id, created_at, updated_at, deleted_at
 
 Catatan Opsi:
-- --data : nama field di database.
-- --title : untuk menganti Nama header table, *jika dikosongkan akan mengabil nama dari data.
-- --orderable : untuk mengaktifkan atau tidak ordering di setiap field.
-- --searchable : untuk mengaktifkan atau tidak searching di setiap field.
-- --width : membuat ukuran setiap field
+- data : nama field di database.
+- title : untuk menganti Nama header table, *jika dikosongkan akan mengabil nama dari data.
+- orderable : untuk mengaktifkan atau tidak ordering di setiap field.
+- searchable : untuk mengaktifkan atau tidak searching di setiap field.
+- width : membuat ukuran setiap field
 
-## `public function _setForm($method)`
-idth : membuat ukuran setiap field
+### `public function _setForm($method)`
+Function ini untuk mengcustom tampilan form di **create** atau **edit**, contoh syntax seperti berikut:
+```bash
+   public function _setForm($method)
+    {
+        $forms = [
+            'nip'=>[
+                    'name'=> 'nip',
+                    'type'=> 'textarea',
+                    'label'=> 'Nip',
+                    'option'=> [
+                        'class' => 'form-control',
+                        'required' => 'required',
+                        'placeholder'=>'Enter Nip',
+                    ],
+                ],'nama'=>[
+                    'name'=> 'nama',
+                    'type'=> 'text',
+                    'label'=> 'Nama',
+                    'option'=> [
+                        'class' => 'form-control',
+                        'required' => 'required',
+                        'placeholder'=>'Enter Nama',
+                    ],
+                ],
+			
+        ];
+        return $forms;
+    }
+```
+*ketika tidak di isi form akan tampil dari field table dari $f_model yang diisi, kecuali id, created_at, updated_at, deleted_at
+
+Catatan Opsi:
+- name
+    `name` harus sesuai dengan field di database
+- type
+    `type` untuk menentukan jenis data di form seperti **text**, **number**, **email**, **password**
+- label
+    `label` untuk meampilan title di form label *default akan sesuai dengan **name**
+- option
+    `option` untuk menambahkan **class**, **required**, **placeholder,** **id**, di <input ...>
+- list
+    `list` untuk menampilkan list ketika type formnya select
+    `'list' => alamat::get()->pluck('name',id)->toArray()`
+- colForm
+    `colForm` untuk menentukan grid setiap form input
+    `'colForm' => 6`
+- validate
+    `validate` untuk membuat validasi untuk setiap form inputnya menggunakan laravel validate
+    `'validate' => 'required|email'`
