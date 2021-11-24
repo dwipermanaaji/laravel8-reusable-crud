@@ -1,5 +1,7 @@
 # Laravel 9 - Reusable CRUD
-deskripsi
+adalah sebuah boilerplate untuk membuat crud di aplikasi admin
+
+
 ### Requirements
     PHP >= 7.4
     
