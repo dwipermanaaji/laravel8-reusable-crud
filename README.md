@@ -1,4 +1,4 @@
-# Laravel 9 - Reusable CRUD
+# Laravel 8 - Reusable CRUD
 adalah sebuah boilerplate untuk membuat crud di aplikasi admin
 
 
